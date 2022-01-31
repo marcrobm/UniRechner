@@ -1,0 +1,25 @@
+function multiply(a, b)
+{
+	return a * b;
+}
+function add(a, b) {
+	return a + b;
+}
+function mult_inv(a) {
+	return (1/a)
+}
+function add_inv(a) 
+{
+	return (-a)
+}
+function get1() 
+{
+	return 1
+}
+function get0() 
+{
+	return 0
+}
+function fromstr(str){
+
+}
