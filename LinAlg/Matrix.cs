@@ -219,13 +219,15 @@ namespace LinAlg
             }
             return (ret);
         }
-        public List<Matrix> Inverse()
+        public Matrix Inverse(out String Latex)
         {
             Matrix tmp = this.Clone();
             tmp = tmp.Append(Matrix.ID(tmp.n));
-            var result = Gauß.rref(tmp);
-            result.Add(result[result.Count - 1].collumsFrom(tmp.n / 2));
-            return (result);
+            String rrefLtx;
+            var res = Gauß.rref(tmp,out rrefLtx).collumsFrom(tmp.n / 2);
+            Latex = rrefLtx+"\\\\";
+            Latex += res.ToString();
+            return (res);
         }
         public KNG Norm1(out int used_index)
         {

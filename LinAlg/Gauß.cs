@@ -36,61 +36,68 @@ namespace LinAlg
             return ret;
         }
 
-            public static List<Matrix> rref(Matrix A)
+            public static Matrix rref(Matrix A, out String latex)
         {
-            List<Matrix> matsl = Elimination(A.Clone());
-            Matrix M = matsl[matsl.Count - 1];
-            List<Matrix> ret = new List<Matrix>();
-            ret.Add(M);
+            Matrix M = Elimination(A.Clone(),out latex);
+            latex += "\\\\Spalten normieren\\\\";
+            // Spalten normieren
+            String[] info = new string[M.m];
+            latex += M.ToString();
             for (int i =Math.Min(A.m-1,A.n-1); i >= 0; i--)
             {
-                Matrix c = ret[ret.Count - 1];
-                //spalte normieren
-                if (!c.data[i][i].Equals(KNG.zero()))
+                if (!M.data[i][i].Equals(KNG.zero()))
                 {
-                    Console.WriteLine("Normieren:" + i);
-                    c = c.MulRow(i, KNG.mult_inv(c.data[i][i]));
+                    Console.WriteLine(" Normieren:" + i);
+                    info[i] = M.data[i][i].ToString();
+                    M = M.MulRow(i, KNG.mult_inv(M.data[i][i]));
                 }
-                ret.Add(c);
             }
-            
-             Matrix d = ret[ret.Count - 1];
-            //einsetzen
-            for(int SRC = d.m-1;SRC>0;SRC--){
+            latex += Utils.StringArrToLatexMatrix(Utils.StringVecTransponiert(info.SubArray(0, info.Length)), "-", false) + "\\\\";
+            latex += "\\\\Rueckwaerts einsetzen\\\\";
+            latex += M.ToString();
+            for (int SRC = M.m-1;SRC>0;SRC--){
                 for (int DST = 0; DST < SRC; DST++)
                 {
-                    KNG Factor = KNG.add_inv(d.data[DST][SRC]);
-                    Console.WriteLine("Einsetzen row:"+SRC+"in"+DST+"factor:"+Factor.ToString());
-                    d = d.AddRow(DST,SRC,Factor);
+                    KNG Factor = KNG.add_inv(M.data[DST][SRC]);
+                    info[DST] = "row:" + (SRC+1) + "in" + (DST+1) + "factor:" + Factor.ToString();
+                    M = M.AddRow(DST, SRC, Factor);
                 }
-                ret.Add(d);
+                latex += Utils.StringArrToLatexMatrix(Utils.StringVecTransponiert(info.SubArray(0, info.Length)), "-", false) +"\\\\"+ M.ToString();
             }
-           
-
-
-
-            return (ret);
+            return (M);
         }
-        public static List<Matrix> Elimination(Matrix A)
+        public static Matrix Elimination(Matrix A,out string Latex)
         {
-            List<Matrix> mats = new List<Matrix>();
-            mats.Add(A.Clone());
+            A = A.Clone();
+            Latex = A.ToString()+ " ";
             for (int i = 0; i < A.n && i < A.m; i++)
             {
-                mats.Add(Schritt(mats[mats.Count - 1],i).Clone());
+                String[] info = new String[A.m+1];//Changes for each row,last entry is for misc info, like swaping rows
+                A=Schritt(A,i,info);
+                Latex += Utils.StringArrToLatexMatrix(Utils.StringVecTransponiert(info.SubArray(0,info.Length-1)), "-", false);
+                Latex += info[info.Length-1];
+                Latex += "\\\\";
+                if (i < A.n - 1)
+                {
+                    Latex += A.ToString();
+                }
             }
-            return (mats);
+            return (A);
         }
-        public static Matrix Schritt(Matrix In,int pos)
+        public static Matrix Schritt(Matrix In,int pos,String[] info)
         {
             Matrix R = In.Clone();
             //find first line with non zero, push it to top       
-            for (int i = pos; i < In.m; i++)
+            if (R.data[pos][pos].Equals(KNG.zero()))
             {
-                if(!R.data[i][pos].Equals(KNG.zero()))
+                for (int i = pos; i < In.m; i++)
                 {
-                    R = R.Clone().swapRow(i, pos);
-                    break;
+                    if (!R.data[i][pos].Equals(KNG.zero()))
+                    {
+                        R = R.Clone().swapRow(i, pos);
+                        info[R.m] = "Swapp:" + (i + 1) + "," + (pos + 1);
+                        break;
+                    }
                 }
             }
             //Console.WriteLine("AMAT:"+R.ToString());
@@ -105,7 +112,8 @@ namespace LinAlg
             for (int c = pos + 1; c < R.m; c++)
             {
                 KNG factor = KNG.add_inv(R.data[c][pos])*KNG.mult_inv(R.data[pos][pos]);
-                Console.WriteLine("Added :" + factor.ToString() + "*" + pos + "to" + c);
+                info[c] = factor.ToString() + "*" + (pos+1)+".Row";
+                Console.WriteLine("Add:"+factor.ToString() + "*" + pos + "to" + c);
                 R = R.AddRow(c,pos,factor);
             }
             return (R);

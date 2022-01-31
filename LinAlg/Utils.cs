@@ -6,11 +6,23 @@ using System.Threading.Tasks;
 
 namespace LinAlg
 {
+    public static class Extensions
+    {
+        public static T[] SubArray<T>(this T[] array, int offset, int length)
+        {
+            return new ArraySegment<T>(array, offset, length)
+                        .ToArray();
+        }
+    }
     class Utils
     {
-        public static string StringArrToLatexMatrix(string[][] mat,string null_value)
+        public static string StringArrToLatexMatrix(string[][] mat,string null_value = "null",bool borders = true)
         {
             String s = @"\pmatrix{";
+            if (borders == false)
+            {
+                s = @"\matrix{";
+            }
             for (int i = 0; i < mat.Length; i++)
             {
                 for (int j = 0; j < mat[i].Length; j++)
@@ -29,6 +41,29 @@ namespace LinAlg
             s = s.Substring(0, s.Length - 2); //remove last //
             s += "}";
             return (s);
+        }
+        public static String[][] StringArrTransponiert(string[][] mat)
+        {
+            String[][] ret = new string[mat[0].Length][];
+            for(int c = 0; c < mat[0].Length; c++)
+            {
+                ret[c] = new String[mat.Length];
+                for(int r = 0; r < mat.Length; r++)
+                {
+                    ret[c][r] = mat[r][c];
+                }
+            }
+            return ret;
+        }
+        public static String[][] StringVecTransponiert(string[] mat)
+        {
+            String[][] ret = new string[mat.Length][];
+            for (int c = 0; c < mat.Length; c++)
+            {
+                ret[c] = new String[1];
+                ret[c][0] = mat[c];
+            }
+            return ret;
         }
         public static void setCollumCount(ref string[][] mat,int count)
         {

@@ -136,7 +136,7 @@ namespace LinAlg
         void CalculateSync()
         {
             KNG.K_Functions = textBox5.Text;
-            try
+           try
             {
                 mats = new Dictionary<String, Matrix>();
                 //Read Inputs + Display them
@@ -160,7 +160,7 @@ namespace LinAlg
                 }
                 if (oldmatchesID == newMatches && lastData == inputText)
                 {
-                    //input did not realy change
+                    //input did not realy change, no need to calculate anything
                     return;
                 }
                 lastData = inputText;
@@ -178,36 +178,26 @@ namespace LinAlg
                             mats.Add(dest, mul);
                             break;
                         case "Gaus":
-                            List<Matrix> gm = Gauß.Elimination(mats[paramn].Clone());
+                            String gausRechenweg;
+                            mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(),out gausRechenweg));
                             Latex += dest + " =Gaus(" + paramn + ")=";
-                            foreach (Matrix m in gm)
-                            {
-                                Latex += m.ToString() + " ";
-                            }
                             Latex += "\\\\";
-                            mats.Add(dest, gm[gm.Count - 1]);
+                            Latex += gausRechenweg;
                             break;
                         case "RREF":
-                            List<Matrix> gmr = Gauß.rref(mats[paramn].Clone());
-                            Latex += dest + "=RREF(" + paramn + ")=";
-                            foreach (Matrix m in gmr)
-                            {
-                                Latex += m.ToString() + "  ";
-                            }
+                            String rrefRechenweg;
+                            mats.Add(dest, Gauß.rref(mats[paramn].Clone(), out rrefRechenweg));
+                            Latex += dest + " =RREF(" + paramn + ")=";
                             Latex += "\\\\";
-                            mats.Add(dest, gmr[gmr.Count - 1]);
+                            Latex += rrefRechenweg;
+                            Latex += "\\\\";
                             break;
                         case "Inverse":
-                            List<Matrix> gmr4 = mats[paramn].Clone().Inverse();
-                            Latex += dest + "=Inverse(" + paramn + ")=";
-                            int cd = 0;
-                            foreach (Matrix m in gmr4)
-                            {
-                                Latex += m.ToString() + ((cd % 5 == 0) ? "\\\\" : " ");
-                                cd++;
-                            }
-                            Latex += "\\\\";
-                            mats.Add(dest, gmr4[gmr4.Count - 1]);
+                            String inverseRechenweg;
+                            mats.Add(dest, mats[paramn].Clone().Inverse(out inverseRechenweg));
+                            Latex += dest + " =Inverse(" + paramn + ")=";
+                            Latex += " \\\\ ";
+                            Latex += inverseRechenweg;
                             break;
                         case "SGaus":
                             List<Matrix> gm3 = Gauß.symetrical(mats[paramn].Clone());
@@ -240,77 +230,14 @@ namespace LinAlg
                     ilatex++;
                     SetMainImageAndInfo(Latex,"");
                 }
-                return;
-
-
-
-
-                //Do Maths
-                foreach (String s in Regex.Split(textBox4.Text, "\r\n|\r|\n"))
-                {
-                    //old parsing code
-                    String destination = s.Split('=')[0].Split(' ')[1];
-                    String[] param = s.Split(' ');
-                    switch (param[0])
-                    {
-                        case "Mat":
-                            destination = s.Split('=')[0].Split(' ')[1];
-                            Matrix mul = MulMat(s.Split('=')[1].Split('*').ToList());
-                            Latex += destination + "=" + mul.ToString() + "\\\\";
-                            mats.Add(destination, mul);
-                            break;
-                        case "SwapRow":
-                            destination = param[1];
-                            Matrix Swap = mats[destination].swapRow(int.Parse(param[2]) - 1, int.Parse(param[3]) - 1);
-                            Latex += "SwapRow(" + destination + "," + param[2] + "," + param[3] + ")" + "=" + Swap.ToString() + "\\\\";
-                            break;
-                        case "AddRow":
-                            destination = param[1];
-                            Matrix Swa = mats[destination].AddRow(int.Parse(param[2]) - 1, int.Parse(param[3]) - 1, KNG.one());
-                            Latex += "AddRow(" + destination + "," + param[2] + "," + param[3] + ")" + "=" + Swa.ToString() + "\\\\";
-                            break;
-                        case "Gaus":
-                            destination = param[1];
-                            Console.WriteLine("name:" + destination);
-                            List<Matrix> gm = Gauß.Elimination(mats[destination].Clone());
-                            Latex += "Gaus:";
-                            foreach (Matrix m in gm)
-                            {
-                                Latex += m.ToString() + "\\\\";
-                            }
-                            Latex += "\\\\";
-                            break;
-                        case "RREF":
-                            destination = param[1];
-                            List<Matrix> gm2 = Gauß.rref(mats[destination].Clone());
-                            Latex += "RREF:";
-                            foreach (Matrix m in gm2)
-                            {
-                                Latex += m.ToString() + "  ";
-                            }
-                            Latex += "\\\\";
-                            break;
-                        case "SGaus":
-                            destination = param[1];
-                            Console.WriteLine("name:" + destination);
-                            List<Matrix> gm3 = Gauß.symetrical(mats[destination].Clone());
-                            Latex += "SGaus:";
-                            foreach (Matrix m in gm3)
-                            {
-                                Latex += m.ToString() + "  ";
-                            }
-                            Latex += "\\\\";
-                            break;
-                    }
-                }
                 ilatex++;//TODO REMOVE
                 LatexViewBox.Image = RenderLatex(Latex);
                 textBoxerrinfo.Text = "";
             }
             catch (Exception ec)
-            {
-                SetMainImageAndInfo(null, ec.Message);
-            }
+           {
+               SetMainImageAndInfo(null, ec.Message);
+           }
         }
         Thread CalcThread;
         void Calculate()
@@ -318,6 +245,7 @@ namespace LinAlg
             if (CalcThread != null)
             {
                 // abort older call to Do Calculation
+                oldmatchesID = "";//calc again
                 CalcThread.Abort();
             }
             CalcThread = new Thread(CalculateSync);
@@ -335,16 +263,11 @@ namespace LinAlg
         }
 
         Image RenderLatex(String latex)
-        {
-            //Console.WriteLine(latex);                
+        {            
             var parser = new WpfMath.TexFormulaParser();
             var formula = parser.Parse(latex);
             var renderer = formula.GetRenderer(WpfMath.TexStyle.Display, 30.0, "Arial");
-            var bitmapSource = renderer.RenderToBitmap(0, 0);
-            // if (draw)
-            //{
-            //LatexBox.Image = GetBitmap(bitmapSource);
-            //}
+            var bitmapSource = renderer.RenderToBitmap(0, 0);        
             return (GetBitmap(bitmapSource));
         }
         //stolen from https://stackoverflow.com/questions/2284353/is-there-a-good-way-to-convert-between-bitmapsource-and-bitmap
