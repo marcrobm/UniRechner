@@ -62,7 +62,16 @@ namespace LinAlg
                     info[DST] = "row:" + (SRC+1) + "in" + (DST+1) + "factor:" + Factor.ToString();
                     M = M.AddRow(DST, SRC, Factor);
                 }
-                latex += Utils.StringArrToLatexMatrix(Utils.StringVecTransponiert(info.SubArray(0, info.Length)), "-", false) +"\\\\"+ M.ToString();
+                latex += Utils.StringArrToLatexMatrix(Utils.StringVecTransponiert(info.SubArray(0, info.Length)), "-", false);
+                if (SRC % 4 == (M.m - 1)%4+4 || SRC == 1)
+                {
+                    latex += "\\\\";
+                }
+                else
+                {
+                    latex += "\\Rightarrow ";
+                }
+                latex += M.ToString();
             }
             return (M);
         }
@@ -76,7 +85,14 @@ namespace LinAlg
                 A=Schritt(A,i,info);
                 Latex += Utils.StringArrToLatexMatrix(Utils.StringVecTransponiert(info.SubArray(0,info.Length-1)), "-", false);
                 Latex += info[info.Length-1];
-                Latex += "\\\\";
+                if (i % 4 == 4 || i==A.n-1)
+                {
+                    Latex += "\\\\";
+                }
+                else
+                {
+                    Latex += "\\Rightarrow ";
+                }
                 if (i < A.n - 1)
                 {
                     Latex += A.ToString();
