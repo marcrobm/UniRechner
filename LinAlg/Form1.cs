@@ -184,6 +184,13 @@ namespace LinAlg
                             Latex += "\\\\";
                             Latex += gausRechenweg;
                             break;
+                        case "partGaus":
+                            String pgausRechenweg;
+                            mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(), out pgausRechenweg,true,true));
+                            Latex += dest + " =Gaus(" + paramn + ")=";
+                            Latex += "\\\\";
+                            Latex += pgausRechenweg;
+                            break;
                         case "RREF":
                             String rrefRechenweg;
                             mats.Add(dest, Gauß.rref(mats[paramn].Clone(), out rrefRechenweg));
@@ -230,11 +237,8 @@ namespace LinAlg
                     ilatex++;
                     SetMainImageAndInfo(Latex,"");
                 }
-                ilatex++;//TODO REMOVE
-                LatexViewBox.Image = RenderLatex(Latex);
-                textBoxerrinfo.Text = "";
             }
-            catch (Exception ec)
+           catch (Exception ec)
            {
                SetMainImageAndInfo(null, ec.Message);
            }

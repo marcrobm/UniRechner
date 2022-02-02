@@ -90,10 +90,13 @@ namespace LinAlg
             this.textBoxth1 = new System.Windows.Forms.TextBox();
             this.button10 = new System.Windows.Forms.Button();
             this.tabPageBS = new System.Windows.Forms.TabPage();
+            this.tabControl4 = new System.Windows.Forms.TabControl();
+            this.tabPage16 = new System.Windows.Forms.TabPage();
+            this.button9 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.button9 = new System.Windows.Forms.Button();
             this.textBoxBS = new System.Windows.Forms.TextBox();
+            this.tabPage17 = new System.Windows.Forms.TabPage();
             this.tabPage15 = new System.Windows.Forms.TabPage();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
@@ -129,6 +132,8 @@ namespace LinAlg
             this.tabPage14.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tabPageBS.SuspendLayout();
+            this.tabControl4.SuspendLayout();
+            this.tabPage16.SuspendLayout();
             this.tabPage15.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LatexViewBox)).BeginInit();
@@ -208,7 +213,7 @@ namespace LinAlg
             this.textBox4.Size = new System.Drawing.Size(486, 252);
             this.textBox4.TabIndex = 4;
             this.textBox4.Text = "X=RREF(A)\r\nY=Multiply(A,A,A,B)\r\nZ=Gaus(Y)\r\nR=Multiply(A,B)\r\nM=Gaus(R)\r\nc=Inverse(" +
-    "D)";
+    "D)\r\nn=partGaus(D)";
             this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // label2
@@ -786,10 +791,7 @@ namespace LinAlg
             // 
             // tabPageBS
             // 
-            this.tabPageBS.Controls.Add(this.label11);
-            this.tabPageBS.Controls.Add(this.label10);
-            this.tabPageBS.Controls.Add(this.button9);
-            this.tabPageBS.Controls.Add(this.textBoxBS);
+            this.tabPageBS.Controls.Add(this.tabControl4);
             this.tabPageBS.Location = new System.Drawing.Point(4, 22);
             this.tabPageBS.Name = "tabPageBS";
             this.tabPageBS.Size = new System.Drawing.Size(492, 595);
@@ -797,10 +799,45 @@ namespace LinAlg
             this.tabPageBS.Text = "BS";
             this.tabPageBS.UseVisualStyleBackColor = true;
             // 
+            // tabControl4
+            // 
+            this.tabControl4.Controls.Add(this.tabPage16);
+            this.tabControl4.Controls.Add(this.tabPage17);
+            this.tabControl4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl4.Location = new System.Drawing.Point(0, 0);
+            this.tabControl4.Name = "tabControl4";
+            this.tabControl4.SelectedIndex = 0;
+            this.tabControl4.Size = new System.Drawing.Size(492, 595);
+            this.tabControl4.TabIndex = 5;
+            // 
+            // tabPage16
+            // 
+            this.tabPage16.Controls.Add(this.button9);
+            this.tabPage16.Controls.Add(this.label11);
+            this.tabPage16.Controls.Add(this.label10);
+            this.tabPage16.Controls.Add(this.textBoxBS);
+            this.tabPage16.Location = new System.Drawing.Point(4, 22);
+            this.tabPage16.Name = "tabPage16";
+            this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage16.Size = new System.Drawing.Size(484, 569);
+            this.tabPage16.TabIndex = 0;
+            this.tabPage16.Text = "Scheduling";
+            this.tabPage16.UseVisualStyleBackColor = true;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(24, 191);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(395, 32);
+            this.button9.TabIndex = 2;
+            this.button9.Text = "FCFS";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 14);
+            this.label11.Location = new System.Drawing.Point(21, 23);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(88, 13);
             this.label11.TabIndex = 4;
@@ -810,31 +847,31 @@ namespace LinAlg
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.3F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(3, 138);
+            this.label10.Location = new System.Drawing.Point(19, 151);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(382, 26);
             this.label10.TabIndex = 3;
             this.label10.Text = "Format: (id,Start,Dauer)(CPU=Anzahl)";
             // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(8, 167);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(483, 32);
-            this.button9.TabIndex = 2;
-            this.button9.Text = "FCFS";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
             // textBoxBS
             // 
-            this.textBoxBS.Location = new System.Drawing.Point(6, 30);
+            this.textBoxBS.Location = new System.Drawing.Point(24, 73);
             this.textBoxBS.Multiline = true;
             this.textBoxBS.Name = "textBoxBS";
-            this.textBoxBS.Size = new System.Drawing.Size(483, 105);
+            this.textBoxBS.Size = new System.Drawing.Size(410, 75);
             this.textBoxBS.TabIndex = 1;
             this.textBoxBS.Text = "(a,1,5) (b,1,4) (c,1,4) (d,1,7)\r\n(e,2,2) (f,3,5) (g,4,3) (h,4,4)\r\n(i,4,2) (CPU=4)" +
     "";
+            // 
+            // tabPage17
+            // 
+            this.tabPage17.Location = new System.Drawing.Point(4, 22);
+            this.tabPage17.Name = "tabPage17";
+            this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage17.Size = new System.Drawing.Size(484, 569);
+            this.tabPage17.TabIndex = 1;
+            this.tabPage17.Text = "tabPage17";
+            this.tabPage17.UseVisualStyleBackColor = true;
             // 
             // tabPage15
             // 
@@ -1003,7 +1040,9 @@ namespace LinAlg
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
             this.tabPageBS.ResumeLayout(false);
-            this.tabPageBS.PerformLayout();
+            this.tabControl4.ResumeLayout(false);
+            this.tabPage16.ResumeLayout(false);
+            this.tabPage16.PerformLayout();
             this.tabPage15.ResumeLayout(false);
             this.tabPage15.PerformLayout();
             this.tabPage6.ResumeLayout(false);
@@ -1097,6 +1136,9 @@ namespace LinAlg
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
+        private System.Windows.Forms.TabControl tabControl4;
+        private System.Windows.Forms.TabPage tabPage16;
+        private System.Windows.Forms.TabPage tabPage17;
     }
 }
 

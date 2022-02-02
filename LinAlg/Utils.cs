@@ -13,6 +13,27 @@ namespace LinAlg
             return new ArraySegment<T>(array, offset, length)
                         .ToArray();
         }
+        public static int[] AddComponentWise<T>(this int[] array, int toAdd)
+        {
+            int[] ret = new int[array.Length];
+            for(int i = 0; i < array.Length; i++)
+            {
+                ret[i] = array[i];
+                ret[i] += toAdd;
+            }
+            return ret;
+        }
+        public static string toLatexVector<T>(this T[] array)
+        {
+            String s = @"\pmatrix{";
+            for (int i = 0; i < array.Length; i++)
+            {
+                s += array[i].ToString() + @"\\";
+            }
+            s = s.Substring(0, s.Length - 2);
+            s += "}";
+            return (s);
+        }
     }
     class Utils
     {
