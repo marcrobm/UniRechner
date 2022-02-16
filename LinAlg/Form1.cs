@@ -135,14 +135,14 @@ namespace LinAlg
         static string lastData = "";
         void CalculateSync()
         {
-            KNG.K_Functions = textBox5.Text;
+           KNG.K_Functions = textBox5.Text;
            try
             {
                 mats = new Dictionary<String, Matrix>();
-                //Read Inputs + Display them
+                // Read Inputs + Display them
                 String Latex = "Inputs:\\\\";
-                String inputText = textBox3.Text;
-                foreach (String s in Regex.Split(inputText, "\r\n|\r|\n"))
+                String inputText = textBox3.Text.Replace(" ","");
+                foreach (String s in Regex.Split(inputText, "\r\n|\r|\n").Where(s => s != String.Empty))
                 {
                     Matrix M = Matrix.FromInput(s.Split('=')[1]);
                     mats.Add(s.Split('=')[0], M);
@@ -153,7 +153,7 @@ namespace LinAlg
                 //new parsing code 
                 Regex Command = new Regex(@"(?<DST>\w+)\=(?<CMD>\w+)\((?<params>[a-zA-Z0-9_,]+)\)");
                 var Matches = Command.Matches(textBox4.Text);
-                string newMatches = "";
+                string newMatches = KNG.K_Functions;
                 foreach (Match match in Matches)
                 {
                     newMatches += match.Groups["DST"].ToString() + match.Groups["params"].ToString() + match.Groups["CMD"].ToString();
@@ -172,11 +172,13 @@ namespace LinAlg
                     Console.WriteLine("dest:" + dest + " paramn:" + paramn);
                     switch (match.Groups["CMD"].ToString())
                     {
+                        case "mul":
                         case "Multiply":
                             Matrix mul = MulMat(paramn.Split(',').ToList());
                             Latex += dest + "=" + paramn.Replace(",", "*") + "=" + mul.ToString() + "\\\\";
                             mats.Add(dest, mul);
                             break;
+                        case "g":
                         case "Gaus":
                             String gausRechenweg;
                             mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(),out gausRechenweg));
@@ -184,13 +186,20 @@ namespace LinAlg
                             Latex += "\\\\";
                             Latex += gausRechenweg;
                             break;
+                        case "pg":
                         case "partGaus":
                             String pgausRechenweg;
-                            mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(), out pgausRechenweg,true,true));
+                            mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(), out pgausRechenweg,true));
+                            mats.Add(paramn + "_L", Gauß.L.Clone());
+                            mats.Add(paramn + "_P", Gauß.P.Clone());
+                            mats.Add(paramn + "_R", Gauß.R.Clone());
                             Latex += dest + " =Gaus(" + paramn + ")=";
+                            Latex += pgausRechenweg + "\\\\";
+                            Latex += paramn + "_L=" + mats[paramn + "_L"].ToString();
+                            Latex += paramn + "_P=" + mats[paramn + "_P"].ToString();
                             Latex += "\\\\";
-                            Latex += pgausRechenweg;
                             break;
+                        case "rr":
                         case "RREF":
                             String rrefRechenweg;
                             mats.Add(dest, Gauß.rref(mats[paramn].Clone(), out rrefRechenweg));
@@ -199,6 +208,7 @@ namespace LinAlg
                             Latex += rrefRechenweg;
                             Latex += "\\\\";
                             break;
+                        case "inv":
                         case "Inverse":
                             String inverseRechenweg;
                             mats.Add(dest, mats[paramn].Clone().Inverse(out inverseRechenweg));
@@ -206,6 +216,7 @@ namespace LinAlg
                             Latex += " \\\\ ";
                             Latex += inverseRechenweg;
                             break;
+                        case "sg":
                         case "SGaus":
                             List<Matrix> gm3 = Gauß.symetrical(mats[paramn].Clone());
                             Latex += dest + "=SGaus(" + paramn + ")=";
@@ -216,6 +227,7 @@ namespace LinAlg
                             Latex += "\\\\";
                             mats.Add(dest, gm3[gm3.Count - 1]);
                             break;
+                        case "1N":
                         case "1Norm":
                             Matrix dst = new Matrix(1, 1);
                             int used = 0;
@@ -223,6 +235,8 @@ namespace LinAlg
                             Latex += dest + "=1Norm(" + paramn + ")=" + dst.ToString() + "Index:" + used + "\\\\";
                             mats.Add(dest, dst);
                             break;
+
+                        case "IN":
                         case "InftyNorm":
                             Matrix dst2 = new Matrix(1, 1);
                             int used2 = 0;
@@ -230,8 +244,29 @@ namespace LinAlg
                             Latex += dest + "=InftyNorm(" + paramn + ")=" + dst2.ToString() + "Index:" + used2 + "\\\\";
                             mats.Add(dest, dst2);
                             break;
+                        case "P":
                         case "Print":
                             Latex += paramn + "=" + mats[paramn].ToString() + "\\\\";
+                            break;
+                        case "T":
+                        case "Transponiert":
+                            mats.Add(dest, mats[paramn].Clone().Trans());
+                            Latex += dest + " =Transponiert("+paramn+")=" + mats[paramn].Clone().Trans().ToString();
+                            Latex += " \\\\ ";
+                            break;
+                        case "bI":
+                        case "BackInsert":
+                            string bilog;
+                            mats.Add(dest, mats[paramn.Split(',')[0]].Clone().rueckwaertsEinsetzen(mats[paramn.Split(',')[1]],out bilog));
+                            Latex += dest + " =BackInsert(" + paramn + ")=" + mats[dest].ToString()+"\\\\";
+                            Latex += bilog;
+                            break;
+                        case "fI":
+                        case "FrontInsert":
+                            string bilog2;
+                            mats.Add(dest, mats[paramn.Split(',')[0]].Clone().forwaertsEinsetzen(mats[paramn.Split(',')[1]], out bilog2));
+                            Latex += dest + " =FrontInsert(" + paramn + ")=" + mats[dest].ToString() + "\\\\";
+                            Latex += bilog2;
                             break;
                     }
                     ilatex++;
@@ -240,7 +275,7 @@ namespace LinAlg
             }
            catch (Exception ec)
            {
-               SetMainImageAndInfo(null, ec.Message);
+               SetMainImageAndInfo(null, ec.Message + ec.StackTrace);
            }
         }
         Thread CalcThread;
@@ -317,6 +352,7 @@ namespace LinAlg
         private void button4_Click(object sender, EventArgs e)
         {
             File.WriteAllText("Koerper\\" + comboBox1.Text + ".js", textBox5.Text);
+            Calculate();
         }
 
 
@@ -932,21 +968,21 @@ namespace LinAlg
                 terminate = false;
             }
             int i = 1;
-            Latex += String.Format(Ltx("Iteration:0, X_0={0} \\\\"), x[0]);
+            Latex += String.Format(Utils.Ltx("Iteration:0, X_0={0} \\\\"), x[0]);
             while (terminate == false && i<=l-1)
             {
                 x.Add((x[i - 1] * x[i - 1]) % n);
-                Latex += String.Format(Ltx("Iteration:{0}, X_{0}={1} \\\\"), i, x[i]);
+                Latex += String.Format(Utils.Ltx("Iteration:{0}, X_{0}={1} \\\\"), i, x[i]);
                 if (x[i] == n - 1)
                 {
-                    Latex += Ltx("prime (line 13) \\\\");
+                    Latex += Utils.Ltx("prime (line 13) \\\\");
                     prime = true;
                     terminate = true;
                     break;
                 }else if (x[i] == 1)
                 {
                     prime = false;
-                    Latex += Ltx("not prime (line 16) \\\\");
+                    Latex += Utils.Ltx("not prime (line 16) \\\\");
                     terminate = true;
                 }     
                 ++i;
@@ -954,13 +990,9 @@ namespace LinAlg
             if (!terminate)
             {
                 //prime = false;
-                Latex += Ltx("not prime? (not terminated within loop) \\\\");
+                Latex += Utils.Ltx("not prime? (not terminated within loop) \\\\");
             }
             return Latex;
-        }
-        static string Ltx(string L)
-        {
-            return L.Replace(" ", "\\:").Replace(Environment.NewLine,"\\\\");
         }
         private void textBoxMiller_n_TextChanged(object sender, EventArgs e)
         {
@@ -974,14 +1006,13 @@ namespace LinAlg
 
         private void button7_Click(object sender, EventArgs e)
         {
-            SetMainImageAndInfo(Ltx(isPrimeRabin(int.Parse(textBoxMiller_n.Text))? "Is a prime":"Is not a prime"));
+            SetMainImageAndInfo(Utils.Ltx(isPrimeRabin(int.Parse(textBoxMiller_n.Text))? "Is a prime":"Is not a prime"));
         }
         private void button9_Click(object sender, EventArgs e)
         {
             String a = textBoxBS.Text;
             Scheduling A = new Scheduling(a);
-            A.ScheduleFCFS();  
-            SetMainImageAndInfo("Input\\\\"+A.TasksToLatex()+ Ltx("\\\\FCFS(rows:core0-coreX, collums time)\\\\")+Utils.StringArrToLatexMatrix(A.Schedule, "\\emptyset"));
+            SetMainImageAndInfo(A.ScheduleFCFS(), "\\emptyset");
         }
 
         private void textBoxaudout_TextChanged(object sender, EventArgs e)
@@ -1058,6 +1089,18 @@ namespace LinAlg
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            String a = textBoxBS.Text;
+            Scheduling A = new Scheduling(a);
+            SetMainImageAndInfo(A.ScheduleSPN(), "\\emptyset");
         }
     }
 }

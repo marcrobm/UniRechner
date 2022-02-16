@@ -119,5 +119,9 @@ namespace LinAlg
                 }
                 mat = rows.ToArray();
         }
+        public static string Ltx(string L)
+        {
+            return L.Replace(" ", "\\:").Replace(Environment.NewLine, "\\\\");
+        }
     }
 }

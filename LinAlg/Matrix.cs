@@ -279,5 +279,43 @@ namespace LinAlg
             }
             return ret;
         }
+        public Matrix rueckwaertsEinsetzen(Matrix vec,out string latex)
+        {
+            latex = "Rueckwaertseinsetzen:\\\\";
+            Matrix ret = new Matrix(n,1);
+            for(int vecpos = n - 1; vecpos >= 0; vecpos--)
+            {
+                latex += "x_" + vecpos + "=\\frac{"+vec.data[vecpos][0].ToString();
+                ret.data[vecpos][0] = vec.data[vecpos][0];
+                for (int i = vecpos+1; i < n; i++)
+                {
+                    latex += "-" + ret.data[i][0].ToString() + "*" + data[vecpos][i].ToString();
+                    ret.data[vecpos][0] -= ret.data[i][0]*data[vecpos][i];
+                }
+                latex += "}{" + data[vecpos][vecpos].ToString() + "}=";
+                ret.data[vecpos][0] /= data[vecpos][vecpos];
+                latex += ret.data[vecpos][0] + "\\\\";
+            }
+            return ret;    
+        }
+        public Matrix forwaertsEinsetzen(Matrix vec, out string latex)
+        {
+            latex = "ForwaertsEinsetzen:\\\\";
+            Matrix ret = new Matrix(n, 1);
+            for (int vecpos = 0; vecpos < n; vecpos++)
+            {
+                latex += "x_" + vecpos + "=\\frac{" + vec.data[vecpos][0].ToString();
+                ret.data[vecpos][0] = vec.data[vecpos][0];
+                for (int i = 0; i < vecpos; i++)
+                {
+                    latex += "-" + ret.data[i][0].ToString() + "*" + data[vecpos][i].ToString();
+                    ret.data[vecpos][0] -= ret.data[i][0] * data[vecpos][i];
+                }
+                latex += "}{" + data[vecpos][vecpos].ToString() + "}=";
+                ret.data[vecpos][0] /= data[vecpos][vecpos];
+                latex += ret.data[vecpos][0] + "\\\\";
+            }
+            return ret;
+        }
     }
 }

@@ -44,10 +44,22 @@ namespace LinAlg
             A.val = js.Execute(K_Functions).GetValue("add").Invoke(c1.val, c2.val);
             return A;
         }
+        public static KNG operator -(KNG c1, KNG c2)
+        {
+            KNG A = new KNG();
+            A.val = js.Execute(K_Functions).GetValue("add").Invoke(c1.val, add_inv(c2).val);
+            return A;
+        }
         public static KNG operator *(KNG c1, KNG c2)
         {
             KNG A = new KNG();
             A.val = js.Execute(K_Functions).GetValue("multiply").Invoke(c1.val, c2.val);
+            return A;
+        }
+        public static KNG operator /(KNG c1, KNG c2)
+        {
+            KNG A = new KNG();
+            A.val = js.Execute(K_Functions).GetValue("multiply").Invoke(c1.val, mult_inv(c2).val);
             return A;
         }
         public override string ToString()

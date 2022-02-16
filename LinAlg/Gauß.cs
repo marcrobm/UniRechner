@@ -8,6 +8,9 @@ namespace LinAlg
 {
     class Gauß
     {
+        public static Matrix L;
+        public static Matrix R;
+        public static Matrix P;
         public static List<Matrix> symetrical(Matrix A)
         {
             Console.WriteLine("symetrical");
@@ -75,15 +78,14 @@ namespace LinAlg
             }
             return (M);
         }
-        public static Matrix Elimination(Matrix A,out string Latex,bool partiellepivatisierung=false,bool outputL = false)
+        public static Matrix Elimination(Matrix A,out string Latex,bool partiellepivatisierung=false)
         {
-            Matrix L = new Matrix(A.m, A.n);//used for LR
+            L = new Matrix(A.m, A.n);//used for LR
             int[] originalRowNumbers = new int[A.m];//used for LR pivating
             for(int i = 0; i < A.m; i++)
             {
                 originalRowNumbers[i] = i+1;
             }
-
             A = A.Clone();
             Latex = A.ToString()+ " ";
             for (int i = 0; i < A.n && i < A.m; i++)
@@ -93,6 +95,7 @@ namespace LinAlg
                 Latex += Utils.StringArrToLatexMatrix(Utils.StringVecTransponiert(info.SubArray(0,info.Length-1)), "-", false);
                 if (partiellepivatisierung)
                 {
+                    //output vector Permutation
                     Latex += originalRowNumbers.toLatexVector();
                 }
                 Latex += info[info.Length-1];
@@ -108,14 +111,20 @@ namespace LinAlg
                 {
                     Latex += A.ToString();
                 }
-            }
-            if (outputL)
+            }      
+            R = A.Clone();
+            if (partiellepivatisierung)
             {
                 for (int i = 0; i < L.m; i++)
                 {
                     L.data[i][i] = KNG.one();
                 }
-                Latex += "L="+L.ToString()+"\\\\";
+                P = new Matrix(A.m, A.n);
+                //output permutation
+                for (int c = 0; c < originalRowNumbers.Length; c++)
+                {
+                    P.data[c][originalRowNumbers[c] - 1] = KNG.one();
+                }
             }
             return (A);
         }
@@ -157,6 +166,9 @@ namespace LinAlg
                         if (!R.data[i][pos].Equals(KNG.zero()))
                         {
                             R = R.Clone().swapRow(i, pos);
+                            int tmp = originalRows[pos];
+                            originalRows[pos] = originalRows[i];
+                            originalRows[i] = tmp;
                             info[R.m] = "Swapp:" + (i + 1) + "," + (pos + 1);
                             break;
                         }
