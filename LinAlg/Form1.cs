@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Numerics;
 using LinAlg.Betriebssysteme;
 using System.Threading;
-
 namespace LinAlg
 {
     public partial class Form1 : Form
@@ -1101,6 +1100,148 @@ namespace LinAlg
             String a = textBoxBS.Text;
             Scheduling A = new Scheduling(a);
             SetMainImageAndInfo(A.ScheduleSPN(), "\\emptyset");
+        }
+        List<int> getSpurenInput()
+        {
+            // Parse Input
+            string[] spurenStr = textBoxBsSpuren.Text.Split(' ');
+            List<int> spuren = new List<int>();
+            for (int i = 0; i < spurenStr.Length; i++)
+            {
+                spuren.Add(int.Parse(spurenStr[i]));
+            }
+            return spuren;
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            //SSTF
+                int seekTime = int.Parse(textBoxBSSeek.Text);
+                List<int> spuren = getSpurenInput();
+                var latexTable = Utils.generate(3, spuren.Count+1);
+                latexTable[0][0] = "ZugriffsZeit";
+                latexTable[1][0] = "Spur\t";
+                latexTable[2][0] = "SuchZeit";
+                int current = spuren[0];
+                spuren.Remove(current);
+                int time = 0;
+                int Tableindex = 2;
+                latexTable[0][1] = "0";
+                latexTable[1][1] = "" + current;
+                latexTable[2][1] = "0";
+                while (spuren.Count > 0)
+                {
+                    var temp = new List<int>(spuren);
+                    temp.Sort((A, B) => (Math.Abs(A - current) - Math.Abs(B - current)));
+                    int next = temp.ElementAt(0);
+                    latexTable[1][Tableindex] = "" + next;
+                    int to_travel = Math.Abs((current - next));
+                    time += seekTime * to_travel;
+                    latexTable[0][Tableindex] = "" + time;
+                    latexTable[2][Tableindex] = "" + seekTime * to_travel;
+                    current = next;
+                    spuren.Remove(current);
+                    Tableindex++;
+                }
+                SetMainImageAndInfo(Utils.StringArrToLatexMatrix(latexTable),Utils.StringArrToTextTable(latexTable));
+            
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            //SSTF
+            int seekTime = int.Parse(textBoxBSSeek.Text);
+            List<int> spuren = getSpurenInput();
+            var latexTable = Utils.generate(3, spuren.Count + 1);
+            latexTable[0][0] = "ZugriffsZeit";
+            latexTable[1][0] = "Spur\t";
+            latexTable[2][0] = "SuchZeit";
+            int current = spuren[0];
+            spuren.Remove(current);
+            int time = 0;
+            int Tableindex = 2;
+            latexTable[0][1] = "0";
+            latexTable[1][1] = "" + current;
+            latexTable[2][1] = "0";
+            while (spuren.Count > 0)
+            {
+                int next = spuren.ElementAt(0);
+                latexTable[1][Tableindex] = "" + next;
+                int to_travel = Math.Abs((current - next));
+                time += seekTime * to_travel;
+                latexTable[0][Tableindex] = "" + time;
+                latexTable[2][Tableindex] = "" + seekTime * to_travel;
+                current = next;
+                spuren.Remove(current);
+                Tableindex++;
+            }
+            SetMainImageAndInfo(Utils.StringArrToLatexMatrix(latexTable), Utils.StringArrToTextTable(latexTable));
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            // Elevator
+            int seekTime = int.Parse(textBoxBSSeek.Text);
+            List<int> spuren = getSpurenInput();
+            var latexTable = Utils.generate(3, spuren.Count + 1);
+            latexTable[0][0] = "ZugriffsZeit";
+            latexTable[1][0] = "Spur\t";
+            latexTable[2][0] = "SuchZeit";
+            int current = spuren[0];
+            spuren.Remove(current);
+            int time = 0;
+            int Tableindex = 2;
+            latexTable[0][1] = "0";
+            latexTable[1][1] = "" + current;
+            latexTable[2][1] = "0";
+            int direction = 0;
+            while (spuren.Count > 0)
+            {
+                int next;
+                switch (direction)
+                {
+                    case 0:
+                        var temp = new List<int>(spuren);
+                        temp.Sort((A, B) => (Math.Abs(A - current) - Math.Abs(B - current)));
+                        next = temp.ElementAt(0);
+                        direction = Math.Sign(next - current);
+                        break;
+                    case 1:
+                        var temp1 = new List<int>(spuren);
+                        temp1.Sort((A, B) => (A - B));
+                        temp1.RemoveAll(x => x < current);
+                        if (temp1.Count == 0)
+                        {
+                            direction = -1;
+                            continue;
+                        }
+                        next = temp1.ElementAt(0);
+                        break;
+                    case -1:
+                        var temp2 = new List<int>(spuren);
+                        temp2.Sort((A, B) => (B - A));
+                        temp2.RemoveAll(x => x > current);
+                        if (temp2.Count == 0)
+                        {
+                            direction = 1;
+                            continue;
+                        }
+                        next = temp2.ElementAt(0);
+                        break;
+                    default:
+                        throw new Exception("Programmer Error");
+                }
+                latexTable[1][Tableindex] = "" + next;
+                int to_travel = Math.Abs((current - next));
+                time += seekTime * to_travel;
+                latexTable[0][Tableindex] = "" + time;
+                latexTable[2][Tableindex] = "" + seekTime * to_travel;
+                current = next;
+                spuren.Remove(current);
+                Tableindex++;
+            }
+            SetMainImageAndInfo(Utils.StringArrToLatexMatrix(latexTable), Utils.StringArrToTextTable(latexTable));
+
         }
     }
 }

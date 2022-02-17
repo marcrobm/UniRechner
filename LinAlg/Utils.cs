@@ -63,6 +63,27 @@ namespace LinAlg
             s += "}";
             return (s);
         }
+        public static string StringArrToTextTable(string[][] mat, string null_value = " ")
+        {
+            String s ="";
+            for (int i = 0; i < mat.Length; i++)
+            {
+                for (int j = 0; j < mat[i].Length; j++)
+                {
+                    if (mat[i][j] == null)
+                    {
+                        s += null_value;
+                    }
+                    else
+                    {
+                        s += mat[i][j];
+                    }
+                    s += "\t";
+                }
+                s += Environment.NewLine;
+            }
+            return (s);
+        }
         public static String[][] StringArrTransponiert(string[][] mat)
         {
             String[][] ret = new string[mat[0].Length][];
@@ -122,6 +143,15 @@ namespace LinAlg
         public static string Ltx(string L)
         {
             return L.Replace(" ", "\\:").Replace(Environment.NewLine, "\\\\");
+        }
+        public static string[][] generate(int first,int second)
+        {
+            string[][] ret = new string[first][];
+            for(int i = 0; i < first; i++)
+            {
+                ret[i] = new string[second];
+            }
+            return ret;
         }
     }
 }

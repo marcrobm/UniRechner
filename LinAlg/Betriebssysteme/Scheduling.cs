@@ -16,6 +16,14 @@ namespace LinAlg.Betriebssysteme
             public string id;
             public uint start;
             public uint duration;
+            public static bool operator ==(Task A,Task B)
+            {
+                return A.id==B.id;
+            }
+            public static bool operator !=(Task A, Task B)
+            {
+                return A.id != B.id;
+            }
         }
         List<Task> tasks = new List<Task>();
         public string[][] Schedule;//row:core, collom:time
@@ -105,7 +113,7 @@ namespace LinAlg.Betriebssysteme
             }
             fillTimeLatex();
             return ("Input\\\\" + TasksToLatex() + Utils.Ltx("\\\\SPN(rows:core0-coreX, collums time)\\\\") + Utils.StringArrToLatexMatrix(Schedule, "\\emptyset"));
-        }
+        }     
         List<Task> GetAvailableTasks(int start_time,List<Task> tasks)
         {
             List<Task> available = new List<Task>();
