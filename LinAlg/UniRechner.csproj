@@ -144,5 +144,11 @@
   <ItemGroup>
     <Folder Include="Koerper\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Screenshots\Algebra.png" />
+    <Content Include="Screenshots\AUD.png" />
+    <Content Include="Screenshots\Koerper.png" />
+    <Content Include="Screenshots\LinAlg.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

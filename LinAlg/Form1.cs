@@ -1031,7 +1031,7 @@ namespace LinAlg
                 textBoxerrinfo.Invoke((MethodInvoker)delegate {
                     textBoxerrinfo.Text = text;
                 });
-            }
+            } 
             if (LatextoRender == null)
             {
                 return;
