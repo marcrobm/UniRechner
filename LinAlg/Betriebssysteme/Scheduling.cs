@@ -29,7 +29,7 @@ namespace LinAlg.Betriebssysteme
         List<Task> tasks = new List<Task>();
         public string[][] Schedule;//row:core, collom:time
         uint cores = 1;
-       uint timeFrameLength = 1;
+        uint timeFrameLength = 1;
         public List<Tuple<string, string>> Dependancies = new List<Tuple<string, string>>(); // Format: <parent,child>
         List<Task> finishedTasks = new List<Task>();
         public Scheduling(String formattedInput,String dependConstraints)
@@ -123,11 +123,11 @@ namespace LinAlg.Betriebssysteme
             {
                 remainingtime[v.id] = (int)v.duration;
             }
-            String TimeLatexInfo = Utils.Ltx("Remaining Timeframes per Step" + Environment.NewLine) + Utils.DictToKeyString(remainingtime)+"\\\\";
+            String TimeLatexInfo = Utils.Ltx("Remaining Timeframes per Step" + Environment.NewLine+"      "+ Utils.DictToKeyString(remainingtime))+"\\\\";
             //while there are tasks to schedule
             while (tempTasks.Count > 0 && maxloops-->0)
             {
-                TimeLatexInfo += Utils.DictToValueString(remainingtime) + "\\\\";
+                TimeLatexInfo +=  Utils.Ltx(current_slot.ToString("D2") + ". "+ Utils.DictToValueString(remainingtime)) + "\\\\";
                 waitingTasks.Sort((x, y) => (int)remainingtime[x.id] - (int)remainingtime[y.id]);
                 List<int> availablecpu = new List<int>(Enumerable.Range(0,(int)cores));
 
@@ -175,9 +175,9 @@ namespace LinAlg.Betriebssysteme
                 current_slot += (int)intervalLength;
                 waitingTasks = new List<Task>(tempTasks.Where((task) => (task.start <= current_slot) && IsAvailable(task, (uint)current_slot)));
             }
-            TimeLatexInfo += Utils.DictToValueString(remainingtime) + "\\\\";
+            TimeLatexInfo += Utils.Ltx(current_slot.ToString("D2") +". "+ Utils.DictToValueString(remainingtime)) + "\\\\";
             fillTimeLatex();
-            return ("Input\\\\" + TasksToLatex() + Utils.Ltx("\\\\SRTF\\\\") + Utils.StringArrToLatexMatrix(Schedule, "\\emptyset") + "\\\\ "+ TimeLatexInfo);
+            return ("Input\\\\" + TasksToLatex() + Utils.Ltx("\\\\SRTF " + (optimizeSwap ? "(minimum Swaps)" : "") + "\\\\") + Utils.StringArrToLatexMatrix(Schedule, "\\emptyset") + "\\\\ "+ TimeLatexInfo);
         }
         public string FilterReadyList(string list)
         {
@@ -213,8 +213,8 @@ namespace LinAlg.Betriebssysteme
             }
         }
         public string ScheduleRR(bool optimizeSwap)
-        {
-            // TODO
+        { 
+            // TODO testing
             int maxloops = 20;
             List<Task> tempTasks = new List<Task>(tasks); // stores all tasks
             int current_slot = 1;
@@ -233,17 +233,26 @@ namespace LinAlg.Betriebssysteme
             {
                 // Add arriving Processes to start of ReadyList
                 ReadyList = ReadyList+"|"; // Keep the old unscheduled processes at the highest priority
-                // Add new incoming processes TODO: multiple entry times
-                var Incoming = waitingTasks.Where(x => !lastScheduledProcesses.Exists(y => y == x.id) && x.start<current_slot).ToList();
-                Incoming.Sort((x, y) => (int)x.start - (int)y.start);
-                foreach (Task t in Incoming) 
+                // Add new incoming processes
+                var Incoming = waitingTasks.Where(x => !lastScheduledProcesses.Exists(y => y == x.id) && x.start<current_slot).ToList(); // alte prozesse die noch zeitwollen und neu hinzugekommene
+                // TODO: multiple entry times
+                // Group the Incoming Processes by their arrival time
+                var incomingGroups = Incoming.GroupBy(x => x.start).ToList();
+                incomingGroups.Sort((x,y)=>(int)x.Key-(int)y.Key); // sort groups by arrival
+                foreach (var group in incomingGroups) 
                 {
-                    if (!ReadyList.Contains(t.id))
+                    foreach(Task t in group)
                     {
-                        ReadyList = ReadyList+","+t.id;// add a waiting task
+                        if (!ReadyList.Contains(t.id))
+                        {
+                            ReadyList = ReadyList + "," + t.id;// add a waiting task
+                        }
+                    }
+                    if (group.First().start < current_slot) // if the time of the entered process is smaller than the current_slot, group
+                    {
+                        ReadyList += "|";
                     }
                 }
-                ReadyList += "|";
 
                 // Add older already scheduled processes
                 //foreach (Task t in waitingTasks.Where(x => lastScheduledProcesses.Exists(y => y == x.id)))
@@ -310,33 +319,19 @@ namespace LinAlg.Betriebssysteme
                             finishedTasks.Add(ct);
                         }
                         else
-                        {
+                        {   // else reduce the remaining time
                             Console.WriteLine(taskToSchedule + " decremented to " + remainingtime[taskToSchedule]);
-                            // else reduce the remaining time
                             remainingtime[taskToSchedule] -= (int)timeFrameLength;
                         }
                     }
                 }
                 lastScheduledProcesses = currentScheduledProcesses;
                 current_slot += (int)timeFrameLength;
-               /*
-                // and now add remaining unscheduled waiting tasks (those still in WaitingTasks) to the front of the ReadyList
-                string tasksThatCouldNotBeScheduled = "";
-                foreach (Task t in waitingTasks)
-                {
-                    tasksThatCouldNotBeScheduled = t.id + "," + tasksThatCouldNotBeScheduled;// add a waiting task
-                }
-                if (tasksThatCouldNotBeScheduled != "")
-                {
-                    tasksThatCouldNotBeScheduled = tasksThatCouldNotBeScheduled.Substring(0, tasksThatCouldNotBeScheduled.Length - 1);// remove last unnecesarry ','
-                }
-                ReadyList = tasksThatCouldNotBeScheduled + "|" + ReadyList;
-                */
                 waitingTasks = new List<Task>(tempTasks.Where((task) => (task.start <= current_slot) && IsAvailable(task, (uint)current_slot)));
                 ReadyLatexInfo += ReadyList + "\\\\";
             }
             fillTimeLatex();
-            return ("Input\\\\" + TasksToLatex() + Utils.Ltx("\\\\RR\\\\") + Utils.StringArrToLatexMatrix(Schedule, "\\emptyset") + "\\\\ " + ReadyLatexInfo);
+            return ("Input\\\\" + TasksToLatex() + Utils.Ltx("\\\\RR "+(optimizeSwap?"(minimum Swaps)":"") + "\\\\") + Utils.StringArrToLatexMatrix(Schedule, "\\emptyset") + "\\\\ " + ReadyLatexInfo);
         }
 
 

@@ -1004,7 +1004,7 @@ namespace LinAlg
             this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage17.Size = new System.Drawing.Size(484, 456);
             this.tabPage17.TabIndex = 1;
-            this.tabPage17.Text = "tabPage17";
+            this.tabPage17.Text = "Disk";
             this.tabPage17.UseVisualStyleBackColor = true;
             // 
             // button14
