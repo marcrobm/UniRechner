@@ -339,7 +339,7 @@ namespace LinAlg.Betriebssysteme
                 ReadyLatexInfo += ReadyList + "\\\\";
             }
             fillTimeLatex();
-            return ("Input\\\\" + TasksToLatex() + Utils.Ltx("\\\\RR (wip)" + (optimizeSwap ? "(minimum Swaps)" : "") + "\\\\") + Utils.StringArrToLatexMatrix(Schedule, "\\emptyset") + "\\\\ " + ReadyLatexInfo);
+            return ("Input\\\\" + TasksToLatex() + Utils.Ltx("\\\\RR " + (optimizeSwap ? "(minimum Swaps)" : "") + "\\\\") + Utils.StringArrToLatexMatrix(Schedule, "\\emptyset") + "\\\\ " + ReadyLatexInfo);
         }
 
 
@@ -388,6 +388,10 @@ namespace LinAlg.Betriebssysteme
         }
         bool IsAvailable(Task t, uint time)
         {
+            if (time < t.start)
+            {
+                return false;
+            }
             // Is there no task this task depends upon which is not finished(in finished list)
             bool res = !Dependancies.Exists(X => (X.Item2 == t.id && !finishedTasks.Exists(y => y.id == X.Item1 && y.end <= time)));
             Console.WriteLine("t:" + t.id + " at:" + time + " can " + (res ? "" : "not") + "be scheduled");
