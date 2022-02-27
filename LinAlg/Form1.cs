@@ -1313,14 +1313,20 @@ namespace LinAlg
 
         private void button16_Click(object sender, EventArgs e)
         {
-            Scheduling A = new Scheduling(textBoxBSProc.Text, textBoxBSGraph.Text);
-            if (textBoxBSProc.Text.Contains("MINSWAP"))
+            try
             {
-                SetMainImageAndInfo(A.ScheduleRR(true), "\\emptyset");
-            }
-            else
+                Scheduling A = new Scheduling(textBoxBSProc.Text, textBoxBSGraph.Text);
+                if (textBoxBSProc.Text.Contains("MINSWAP"))
+                {
+                    SetMainImageAndInfo(A.ScheduleRR(true), "\\emptyset");
+                }
+                else
+                {
+                    SetMainImageAndInfo(A.ScheduleRR(false), "\\emptyset");
+                }
+            }catch(Exception ex)
             {
-                SetMainImageAndInfo(A.ScheduleRR(false), "\\emptyset");
+                SetMainImageAndInfo("err","Error:"+ ex.Message);
             }
         }
     }
