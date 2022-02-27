@@ -59,7 +59,7 @@ namespace LinAlg
             public List<Tuple<string,string,char>> transitions = new List<Tuple<string, string, char>>();
             public List<string> Nodes = new List<string>();
             public List<string> FinalNodes = new List<string>();
-            public List<char> Alphabet = new List<char>();
+            public List<char> Alphabet = new List<char>();      
         }
         public static string TableFilling(AUTOMAT A)
         {

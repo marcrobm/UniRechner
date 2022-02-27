@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Numerics;
 using LinAlg.Betriebssysteme;
 using System.Threading;
+using System.Collections;
+
 namespace LinAlg
 {
     public partial class Form1 : Form
@@ -148,10 +150,17 @@ namespace LinAlg
                     Latex += s.Split('=')[0] + "=" + M.ToString() + "\\\\";
                 }
                 Latex += "Outputs:\\\\";
-
                 //new parsing code 
+                // X=CMD(args)
                 Regex Command = new Regex(@"(?<DST>\w+)\=(?<CMD>\w+)\((?<params>[a-zA-Z0-9_,]+)\)");
-                var Matches = Command.Matches(textBox4.Text);
+
+                // filter out comments
+                var tempInp = textBox4.Text.Split(new String[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                tempInp.RemoveAll(x => x.ElementAt(0) == '%');
+                string cmdsInput = String.Join(Environment.NewLine, tempInp.ToArray());
+
+                var Matches = Command.Matches(cmdsInput);
+
                 string newMatches = KNG.K_Functions;
                 foreach (Match match in Matches)
                 {
@@ -164,9 +173,18 @@ namespace LinAlg
                 }
                 lastData = inputText;
                 oldmatchesID = newMatches;
+                int outindex = 0;
                 foreach (Match match in Matches)
                 {
-                    String dest = match.Groups["DST"].ToString();
+                    String dest;
+                    if (match.Groups["DST"] != null)
+                    {
+                        dest = match.Groups["DST"].ToString();
+                    }
+                    else
+                    {
+                        dest = "out_" + outindex;
+                    }
                     String paramn = match.Groups["params"].ToString();
                     Console.WriteLine("dest:" + dest + " paramn:" + paramn);
                     switch (match.Groups["CMD"].ToString())
@@ -1009,8 +1027,7 @@ namespace LinAlg
         }
         private void button9_Click(object sender, EventArgs e)
         {
-            String a = textBoxBS.Text;
-            Scheduling A = new Scheduling(a);
+            Scheduling A = new Scheduling(textBoxBSProc.Text, textBoxBSGraph.Text);
             SetMainImageAndInfo(A.ScheduleFCFS(), "\\emptyset");
         }
 
@@ -1097,8 +1114,7 @@ namespace LinAlg
 
         private void button11_Click(object sender, EventArgs e)
         {
-            String a = textBoxBS.Text;
-            Scheduling A = new Scheduling(a);
+            Scheduling A = new Scheduling(textBoxBSProc.Text, textBoxBSGraph.Text);
             SetMainImageAndInfo(A.ScheduleSPN(), "\\emptyset");
         }
         List<int> getSpurenInput()
@@ -1242,6 +1258,70 @@ namespace LinAlg
             }
             SetMainImageAndInfo(Utils.StringArrToLatexMatrix(latexTable), Utils.StringArrToTextTable(latexTable));
 
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            comboBox1.SelectedIndex = 2;// TODO make this universal this changes the active Field "Koerper" to Reals
+            string[] xvalues = textBoxNumX.Text.Split(',');
+            string[] yvalues = textBoxNumF.Text.Split(',');
+            // calculate Divided Differences
+            Matrix CalcTable = new Matrix(xvalues.Length, xvalues.Length+1);
+            // init x values
+            for (int i = 0; i < CalcTable.m; i++)
+            {
+                CalcTable.data[i][0] = new KNG(xvalues[i]);
+
+            }
+            // init y values
+            for (int i = 0; i < CalcTable.m; i++)
+            {
+                CalcTable.data[i][1] = new KNG(yvalues[i]);
+            }
+            for (int i = 2; i < CalcTable.n; i++)
+            {
+                for(int c = 0; c< i-2; c++)
+                {
+                    KNG P_unten = CalcTable.data[c][i - 1];
+                    KNG P_oben = CalcTable.data[c][i - 2];
+                    KNG X_unten = CalcTable.data[c][0];
+                    KNG X_oben = CalcTable.data[c + i - 2][0];
+                    CalcTable.data[c][i] = (P_unten-P_oben)/(X_unten-X_oben);
+                }
+            }
+
+            SetMainImageAndInfo(CalcTable.ToString());
+        }
+
+        private void textBox8_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            Scheduling A = new Scheduling(textBoxBSProc.Text, textBoxBSGraph.Text);
+            if (textBoxBSProc.Text.Contains("MINSWAP"))
+            {
+                SetMainImageAndInfo(A.ScheduleSRTF(true), "\\emptyset");
+            }
+            else
+            {
+                SetMainImageAndInfo(A.ScheduleSRTF(false), "\\emptyset");
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            Scheduling A = new Scheduling(textBoxBSProc.Text, textBoxBSGraph.Text);
+            if (textBoxBSProc.Text.Contains("MINSWAP"))
+            {
+                SetMainImageAndInfo(A.ScheduleRR(true), "\\emptyset");
+            }
+            else
+            {
+                SetMainImageAndInfo(A.ScheduleRR(false), "\\emptyset");
+            }
         }
     }
 }

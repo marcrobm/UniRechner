@@ -153,5 +153,23 @@ namespace LinAlg
             }
             return ret;
         }
+        public static string DictToValueString(Dictionary<string, int> input)
+        {
+            string output = "";
+            foreach(var k in input)
+            {
+                output += " " + k.Value;
+            }
+            return output;
+        }
+        public static string DictToKeyString(Dictionary<string, int> input)
+        {
+            string output = "";
+            foreach (var k in input)
+            {
+                output += " " + k.Key;
+            }
+            return output;
+        }
     }
 }

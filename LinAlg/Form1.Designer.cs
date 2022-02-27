@@ -83,6 +83,10 @@ namespace LinAlg
             this.button2 = new System.Windows.Forms.Button();
             this.gcd_textBox3 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBoxNumF = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBoxNumX = new System.Windows.Forms.TextBox();
             this.button8 = new System.Windows.Forms.Button();
             this.tabPage14 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
@@ -92,7 +96,7 @@ namespace LinAlg
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tabPage16 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBoxBS = new System.Windows.Forms.TextBox();
+            this.textBoxBSProc = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
@@ -100,6 +104,13 @@ namespace LinAlg
             this.button11 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.button14 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBoxBSSeek = new System.Windows.Forms.TextBox();
+            this.textBoxBsSpuren = new System.Windows.Forms.TextBox();
             this.tabPage15 = new System.Windows.Forms.TabPage();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
@@ -109,13 +120,10 @@ namespace LinAlg
             this.LatexViewBox = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBoxBsSpuren = new System.Windows.Forms.TextBox();
-            this.textBoxBSSeek = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBoxBSGraph = new System.Windows.Forms.TextBox();
+            this.button15 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -149,6 +157,7 @@ namespace LinAlg
             ((System.ComponentModel.ISupportInitialize)(this.LatexViewBox)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel11.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -731,6 +740,10 @@ namespace LinAlg
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label15);
+            this.tabPage2.Controls.Add(this.textBoxNumF);
+            this.tabPage2.Controls.Add(this.label14);
+            this.tabPage2.Controls.Add(this.textBoxNumX);
             this.tabPage2.Controls.Add(this.button8);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -739,14 +752,55 @@ namespace LinAlg
             this.tabPage2.Text = "Numerik";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(11, 70);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(67, 13);
+            this.label15.TabIndex = 5;
+            this.label15.Text = "F(Stützstelle)";
+            // 
+            // textBoxNumF
+            // 
+            this.textBoxNumF.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.3F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxNumF.Location = new System.Drawing.Point(84, 64);
+            this.textBoxNumF.Multiline = true;
+            this.textBoxNumF.Name = "textBoxNumF";
+            this.textBoxNumF.Size = new System.Drawing.Size(295, 27);
+            this.textBoxNumF.TabIndex = 4;
+            this.textBoxNumF.Tag = "";
+            this.textBoxNumF.Text = "0,-1,0";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(11, 28);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(61, 13);
+            this.label14.TabIndex = 3;
+            this.label14.Text = "Stützstellen";
+            // 
+            // textBoxNumX
+            // 
+            this.textBoxNumX.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.3F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxNumX.Location = new System.Drawing.Point(84, 25);
+            this.textBoxNumX.Multiline = true;
+            this.textBoxNumX.Name = "textBoxNumX";
+            this.textBoxNumX.Size = new System.Drawing.Size(295, 27);
+            this.textBoxNumX.TabIndex = 2;
+            this.textBoxNumX.Tag = "";
+            this.textBoxNumX.Text = "-1,0,1";
+            // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(3, 3);
+            this.button8.Location = new System.Drawing.Point(3, 97);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(194, 56);
+            this.button8.Size = new System.Drawing.Size(376, 56);
             this.button8.TabIndex = 1;
             this.button8.Text = "Calc";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // tabPage14
             // 
@@ -836,8 +890,8 @@ namespace LinAlg
             this.tableLayoutPanel8.ColumnCount = 1;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.Controls.Add(this.textBoxBS, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel11, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -848,15 +902,16 @@ namespace LinAlg
             this.tableLayoutPanel8.TabIndex = 5;
             this.tableLayoutPanel8.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel8_Paint);
             // 
-            // textBoxBS
+            // textBoxBSProc
             // 
-            this.textBoxBS.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxBS.Location = new System.Drawing.Point(3, 3);
-            this.textBoxBS.Multiline = true;
-            this.textBoxBS.Name = "textBoxBS";
-            this.textBoxBS.Size = new System.Drawing.Size(472, 219);
-            this.textBoxBS.TabIndex = 1;
-            this.textBoxBS.Text = "a b c d e f g h i\r\n5 4 4 7 2 5 3 4 2\r\n1 1 1 1 2 3 4 4 4\r\n(CPU=4)";
+            this.textBoxBSProc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxBSProc.Location = new System.Drawing.Point(3, 3);
+            this.textBoxBSProc.Multiline = true;
+            this.textBoxBSProc.Name = "textBoxBSProc";
+            this.textBoxBSProc.Size = new System.Drawing.Size(230, 213);
+            this.textBoxBSProc.TabIndex = 1;
+            this.textBoxBSProc.Text = "a b c d e f g h i\r\n6 3 2 4 4 5 1 3 3\r\n1 1 1 1 1 1 1 1 1\r\n(CPU=3)\r\n(FRAME=2)\r\nMINS" +
+    "WAP";
             // 
             // tableLayoutPanel9
             // 
@@ -889,6 +944,8 @@ namespace LinAlg
             this.tableLayoutPanel10.ColumnCount = 1;
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.Controls.Add(this.button16, 0, 3);
+            this.tableLayoutPanel10.Controls.Add(this.button15, 0, 2);
             this.tableLayoutPanel10.Controls.Add(this.button9, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.button11, 0, 1);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -949,6 +1006,70 @@ namespace LinAlg
             this.tabPage17.TabIndex = 1;
             this.tabPage17.Text = "tabPage17";
             this.tabPage17.UseVisualStyleBackColor = true;
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(13, 121);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(454, 23);
+            this.button14.TabIndex = 6;
+            this.button14.Text = "Elevator";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(13, 92);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(454, 23);
+            this.button13.TabIndex = 5;
+            this.button13.Text = "FIFO (First In First Out";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(13, 63);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(454, 23);
+            this.button12.TabIndex = 4;
+            this.button12.Text = "SSTF (Shortest Seek Time First)";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(10, 33);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(55, 13);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "SeekTime";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 13);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Spuren";
+            // 
+            // textBoxBSSeek
+            // 
+            this.textBoxBSSeek.Location = new System.Drawing.Point(99, 33);
+            this.textBoxBSSeek.Name = "textBoxBSSeek";
+            this.textBoxBSSeek.Size = new System.Drawing.Size(368, 20);
+            this.textBoxBSSeek.TabIndex = 1;
+            this.textBoxBSSeek.Text = "3";
+            // 
+            // textBoxBsSpuren
+            // 
+            this.textBoxBsSpuren.Location = new System.Drawing.Point(99, 7);
+            this.textBoxBsSpuren.Name = "textBoxBsSpuren";
+            this.textBoxBsSpuren.Size = new System.Drawing.Size(368, 20);
+            this.textBoxBsSpuren.TabIndex = 0;
+            this.textBoxBsSpuren.Text = "25 45 36 17 2 60 53 42 10";
             // 
             // tabPage15
             // 
@@ -1060,69 +1181,54 @@ namespace LinAlg
             this.tableLayoutPanel2.Size = new System.Drawing.Size(997, 47);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // textBoxBsSpuren
+            // tableLayoutPanel11
             // 
-            this.textBoxBsSpuren.Location = new System.Drawing.Point(99, 7);
-            this.textBoxBsSpuren.Name = "textBoxBsSpuren";
-            this.textBoxBsSpuren.Size = new System.Drawing.Size(368, 20);
-            this.textBoxBsSpuren.TabIndex = 0;
-            this.textBoxBsSpuren.Text = "25 45 36 17 2 60 53 42 10";
+            this.tableLayoutPanel11.ColumnCount = 2;
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.Controls.Add(this.textBoxBSProc, 0, 0);
+            this.tableLayoutPanel11.Controls.Add(this.textBoxBSGraph, 1, 0);
+            this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel11.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel11.Name = "tableLayoutPanel11";
+            this.tableLayoutPanel11.RowCount = 1;
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(472, 219);
+            this.tableLayoutPanel11.TabIndex = 6;
             // 
-            // textBoxBSSeek
+            // textBoxBSGraph
             // 
-            this.textBoxBSSeek.Location = new System.Drawing.Point(99, 33);
-            this.textBoxBSSeek.Name = "textBoxBSSeek";
-            this.textBoxBSSeek.Size = new System.Drawing.Size(368, 20);
-            this.textBoxBSSeek.TabIndex = 1;
-            this.textBoxBSSeek.Text = "3";
+            this.textBoxBSGraph.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxBSGraph.Location = new System.Drawing.Point(239, 3);
+            this.textBoxBSGraph.Multiline = true;
+            this.textBoxBSGraph.Name = "textBoxBSGraph";
+            this.textBoxBSGraph.Size = new System.Drawing.Size(230, 213);
+            this.textBoxBSGraph.TabIndex = 2;
+            this.textBoxBSGraph.Text = "b>h\r\nh>d\r\nh>e\r\na>c\r\ni>g\r\ng>f";
+            this.textBoxBSGraph.TextChanged += new System.EventHandler(this.textBox8_TextChanged_1);
             // 
-            // label12
+            // button15
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 13);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "Spuren";
+            this.button15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button15.Location = new System.Drawing.Point(3, 103);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(359, 59);
+            this.button15.TabIndex = 4;
+            this.button15.Text = "SRTF (Shortest Remaining Timeframe Next)";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
-            // label13
+            // button16
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(10, 33);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(55, 13);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "SeekTime";
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(13, 63);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(454, 23);
-            this.button12.TabIndex = 4;
-            this.button12.Text = "SSTF (Shortest Seek Time First)";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(13, 92);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(454, 23);
-            this.button13.TabIndex = 5;
-            this.button13.Text = "FIFO (First In First Out";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // button14
-            // 
-            this.button14.Location = new System.Drawing.Point(13, 121);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(454, 23);
-            this.button14.TabIndex = 6;
-            this.button14.Text = "Elevator";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
+            this.button16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button16.Location = new System.Drawing.Point(3, 168);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(359, 42);
+            this.button16.TabIndex = 5;
+            this.button16.Text = "RR (Round Robin)";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // Form1
             // 
@@ -1162,6 +1268,7 @@ namespace LinAlg
             this.tabPage13.ResumeLayout(false);
             this.tabPage13.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.tabPage14.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
@@ -1170,7 +1277,6 @@ namespace LinAlg
             this.tabPage16.ResumeLayout(false);
             this.tabPage16.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
             this.tableLayoutPanel9.ResumeLayout(false);
             this.tableLayoutPanel9.PerformLayout();
             this.tableLayoutPanel10.ResumeLayout(false);
@@ -1184,6 +1290,8 @@ namespace LinAlg
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel11.ResumeLayout(false);
+            this.tableLayoutPanel11.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1252,7 +1360,7 @@ namespace LinAlg
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.TextBox textBoxBS;
+        private System.Windows.Forms.TextBox textBoxBSProc;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -1279,6 +1387,14 @@ namespace LinAlg
         private System.Windows.Forms.TextBox textBoxBsSpuren;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBoxNumX;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBoxNumF;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
+        private System.Windows.Forms.TextBox textBoxBSGraph;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button16;
     }
 }
 
