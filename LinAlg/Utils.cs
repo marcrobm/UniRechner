@@ -171,5 +171,47 @@ namespace LinAlg
             }
             return output;
         }
+        public static int closingBraketPos(string text, int openingBranketPos)
+        {
+            int open = 0;
+            int searchpos = openingBranketPos+1;
+            while (searchpos < text.Length)
+            {
+                if (text.ElementAt(searchpos) == ')' && open==0)
+                {
+                    return searchpos;
+                }else if(text.ElementAt(searchpos) == ')')
+                {
+                    open--;
+                }else if(text.ElementAt(searchpos) == '(')
+                {
+                    open++;
+                }
+                searchpos++;
+            }
+            return -1;
+        }
+        public static int openingBraketPos(string text, int closedBranketPos)
+        {
+            int open = 0;
+            int searchpos = closedBranketPos - 1;
+            while (searchpos >=0)
+            {
+                if (text.ElementAt(searchpos) == '(' && open == 0)
+                {
+                    return searchpos;
+                }
+                else if (text.ElementAt(searchpos) == ')')
+                {
+                    open--;
+                }
+                else if (text.ElementAt(searchpos) == '(')
+                {
+                    open++;
+                }
+                searchpos--;
+            }
+            return -1;
+        }
     }
 }

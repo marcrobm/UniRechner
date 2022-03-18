@@ -34,17 +34,6 @@ namespace LinAlg.Betriebssysteme
         List<Task> finishedTasks = new List<Task>();
         public Scheduling(String formattedInput, String dependConstraints)
         {
-            /*
-            Regex inputFormat = new Regex(@"\((?<id>\w+),(?<start>\d+),(?<duration>\d+)\)");
-            foreach(Match match in inputFormat.Matches(formattedInput))
-            {
-                Task A = new Task();
-                A.id = match.Groups["id"].ToString();
-                A.start = uint.Parse(match.Groups["start"].ToString());
-                A.duration = uint.Parse(match.Groups["duration"].ToString());
-                tasks.Add(A);
-            }*/
-
             Regex DependanciesRegEx = new Regex(@"(?<Parent>\w+)\>(?<Child>\w+)");
             var matches = DependanciesRegEx.Matches(dependConstraints);
             foreach (Match match in matches)

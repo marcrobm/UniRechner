@@ -1,25 +1,23 @@
-﻿using System;
+﻿using LinAlg.Betriebssysteme;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Numerics;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using System.Numerics;
-using LinAlg.Betriebssysteme;
-using System.Threading;
-using System.Collections;
+using UniRechner;
 
 namespace LinAlg
 {
     public partial class Form1 : Form
     {
+        private CollumResizer mainCresize;
         public Form1()
         {
             InitializeComponent();
@@ -29,8 +27,17 @@ namespace LinAlg
                 comboBox1.Items.Add(f.Split('.')[0].Split('\\')[1]);
             }
             textBox5.Text = File.ReadAllText("Koerper\\" + comboBox1.Text + ".js");
-        }
 
+            mainCresize = new CollumResizer(ref tableLayoutPanel1,15);
+
+        }
+        TextHighlighter rdbcodebox;
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Calculate();
+            UpdateRDBDRCTRC();
+            rdbcodebox = new TextHighlighter(ref richTextBoxRDB1SET);
+        }
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -136,13 +143,13 @@ namespace LinAlg
         static string lastData = "";
         void CalculateSync()
         {
-           KNG.K_Functions = textBox5.Text;
-           try
+            KNG.K_Functions = textBox5.Text;
+            try
             {
                 mats = new Dictionary<String, Matrix>();
                 // Read Inputs + Display them
                 String Latex = "Inputs:\\\\";
-                String inputText = textBox3.Text.Replace(" ","");
+                String inputText = textBox3.Text.Replace(" ", "");
                 foreach (String s in Regex.Split(inputText, "\r\n|\r|\n").Where(s => s != String.Empty))
                 {
                     Matrix M = Matrix.FromInput(s.Split('=')[1]);
@@ -198,7 +205,7 @@ namespace LinAlg
                         case "g":
                         case "Gaus":
                             String gausRechenweg;
-                            mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(),out gausRechenweg));
+                            mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(), out gausRechenweg));
                             Latex += dest + " =Gaus(" + paramn + ")=";
                             Latex += "\\\\";
                             Latex += gausRechenweg;
@@ -206,7 +213,7 @@ namespace LinAlg
                         case "pg":
                         case "partGaus":
                             String pgausRechenweg;
-                            mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(), out pgausRechenweg,true));
+                            mats.Add(dest, Gauß.Elimination(mats[paramn].Clone(), out pgausRechenweg, true));
                             mats.Add(paramn + "_L", Gauß.L.Clone());
                             mats.Add(paramn + "_P", Gauß.P.Clone());
                             mats.Add(paramn + "_R", Gauß.R.Clone());
@@ -268,14 +275,14 @@ namespace LinAlg
                         case "T":
                         case "Transponiert":
                             mats.Add(dest, mats[paramn].Clone().Trans());
-                            Latex += dest + " =Transponiert("+paramn+")=" + mats[paramn].Clone().Trans().ToString();
+                            Latex += dest + " =Transponiert(" + paramn + ")=" + mats[paramn].Clone().Trans().ToString();
                             Latex += " \\\\ ";
                             break;
                         case "bI":
                         case "BackInsert":
                             string bilog;
-                            mats.Add(dest, mats[paramn.Split(',')[0]].Clone().rueckwaertsEinsetzen(mats[paramn.Split(',')[1]],out bilog));
-                            Latex += dest + " =BackInsert(" + paramn + ")=" + mats[dest].ToString()+"\\\\";
+                            mats.Add(dest, mats[paramn.Split(',')[0]].Clone().rueckwaertsEinsetzen(mats[paramn.Split(',')[1]], out bilog));
+                            Latex += dest + " =BackInsert(" + paramn + ")=" + mats[dest].ToString() + "\\\\";
                             Latex += bilog;
                             break;
                         case "fI":
@@ -287,13 +294,13 @@ namespace LinAlg
                             break;
                     }
                     ilatex++;
-                    SetMainImageAndInfo(Latex,"");
+                    SetMainImageAndInfo(Latex, "");
                 }
             }
-           catch (Exception ec)
-           {
-               SetMainImageAndInfo(null, ec.Message + ec.StackTrace);
-           }
+            catch (Exception ec)
+            {
+                SetMainImageAndInfo(null, ec.Message + ec.StackTrace);
+            }
         }
         Thread CalcThread;
         void Calculate()
@@ -319,31 +326,31 @@ namespace LinAlg
         }
 
         Image RenderLatex(String latex)
-        {            
+        {
             var parser = new WpfMath.TexFormulaParser();
             var formula = parser.Parse(latex);
             var renderer = formula.GetRenderer(WpfMath.TexStyle.Display, 30.0, "Arial");
-            var bitmapSource = renderer.RenderToBitmap(0, 0);        
+            var bitmapSource = renderer.RenderToBitmap(0, 0);
             return (GetBitmap(bitmapSource));
         }
-        //stolen from https://stackoverflow.com/questions/2284353/is-there-a-good-way-to-convert-between-bitmapsource-and-bitmap
-        Bitmap GetBitmap(BitmapSource source)
+        // converts a Bitmap Source Object to a Bitmap, inspired by https://stackoverflow.com/questions/2284353/is-there-a-good-way-to-convert-between-bitmapsource-and-bitmap
+        Bitmap GetBitmap(BitmapSource src)
         {
-            Bitmap bmp = new Bitmap(
-              source.PixelWidth,
-              source.PixelHeight,
+            Bitmap dst = new Bitmap(
+              src.PixelWidth,
+              src.PixelHeight,
               PixelFormat.Format32bppPArgb);
-            BitmapData data = bmp.LockBits(
-              new Rectangle(Point.Empty, bmp.Size),
+            BitmapData intermediate = dst.LockBits(
+              new Rectangle(Point.Empty, dst.Size),
               ImageLockMode.WriteOnly,
               PixelFormat.Format32bppPArgb);
-            source.CopyPixels(
+            src.CopyPixels(
               System.Windows.Int32Rect.Empty,
-              data.Scan0,
-              data.Height * data.Stride,
-              data.Stride);
-            bmp.UnlockBits(data);
-            return bmp;
+              intermediate.Scan0,
+              intermediate.Height * intermediate.Stride,
+              intermediate.Stride);
+            dst.UnlockBits(intermediate);
+            return dst;
         }
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
@@ -371,10 +378,6 @@ namespace LinAlg
             File.WriteAllText("Koerper\\" + comboBox1.Text + ".js", textBox5.Text);
             Calculate();
         }
-
-
-
-
         private void textBoxfermat_TextChanged(object sender, EventArgs e)
         {
             String Latex = "Fermat \\: Faktorisierung \\\\";
@@ -395,9 +398,8 @@ namespace LinAlg
                 int y = (int)Math.Round(Math.Sqrt((double)r));
                 int a = x + y;
                 int b = x - y;
-
-                Latex += "\\\\floor(abs(sqrt(r))="+y+"\\\\";
-                Latex += "N=(" +x+"+"+y+")"+"*"+ "(" +x+" - "+y+")" + " = "+ a + "*" + b + "\\\\";
+                Latex += "\\\\floor(abs(sqrt(r))=" + y + "\\\\";
+                Latex += "N=(" + x + "+" + y + ")" + "*" + "(" + x + " - " + y + ")" + " = " + a + "*" + b + "\\\\";
                 SetMainImageAndInfo(Latex);
             }
             catch (Exception d)
@@ -405,7 +407,7 @@ namespace LinAlg
 
             }
         }
-   
+
         List<int> SiebErastothenes(int maxnumber, out string Latex)
         {
             List<int> numberslist = new List<int>();
@@ -461,7 +463,7 @@ namespace LinAlg
                 if (N > 3)
                 {
                     string Latex = "";
-                    List<int> primes = SiebErastothenes(N,out Latex);
+                    List<int> primes = SiebErastothenes(N, out Latex);
                     SetMainImageAndInfo(Latex);
                 }
             }
@@ -565,7 +567,7 @@ namespace LinAlg
                 String eingabe_formatiert = DataentrylistToStr(inp);
                 List<DataEntry> greedyresult = Greedy0(inp, int.Parse(textBoxZ.Text));
                 String output = DataentrylistToStr(greedyresult);
-                SetMainImageAndInfo("Input:\\\\" + eingabe_formatiert + "\\\\ Output: \\\\" + output);    
+                SetMainImageAndInfo("Input:\\\\" + eingabe_formatiert + "\\\\ Output: \\\\" + output);
             }
             catch (Exception err)
             {
@@ -703,7 +705,8 @@ namespace LinAlg
                     w[i] = int.Parse(textBoxaud.Lines[1].Split(' ')[i]);
                 }
                 textBoxerrinfo.Text = "G:" + HoersahlRecursive(input, input.Count - 1, w);
-            }catch(Exception exx)
+            }
+            catch (Exception exx)
             {
                 textBoxerrinfo.Text = "Error:" + exx.Message;
             }
@@ -900,7 +903,7 @@ namespace LinAlg
                 int[] M = new int[m.Length];
                 for (int i = 0; i < m.Length; i++)
                 {
-                    Rechenweg += "M_" + i + "=" + m_product/m[i]+",";
+                    Rechenweg += "M_" + i + "=" + m_product / m[i] + ",";
                     M[i] = m_product / m[i];
                 }
                 Rechenweg += "\\\\";
@@ -912,12 +915,12 @@ namespace LinAlg
                     String log = "";
                     List<int> s;
                     List<int> t;
-                    Rechenweg += String.Format("gcd(m_{0},M_{0})=gcd({1},{2})=" + gcd(m[i], M[i], out log, out s, out t) + "\\\\",i,m[i],M[i]);
+                    Rechenweg += String.Format("gcd(m_{0},M_{0})=gcd({1},{2})=" + gcd(m[i], M[i], out log, out s, out t) + "\\\\", i, m[i], M[i]);
                     Rechenweg += log + "\\\\";
                     T[i] = t[t.Count - 2];
                     Rechenweg += "t_i =" + T[i] + "\\\\";
                     int e = M[i] * T[i];
-                    Rechenweg += " e_" + i +"=M["+i+"]*T_i"+ "=" + M[i]+"*" + T[i] + "=" + e+ "\\\\";
+                    Rechenweg += " e_" + i + "=M[" + i + "]*T_i" + "=" + M[i] + "*" + T[i] + "=" + e + "\\\\";
                     E[i] = e;
                 }
                 Rechenweg += "\\\\  X=";
@@ -929,8 +932,8 @@ namespace LinAlg
                     X += E[i] * a[i];
                 }
                 Rechenweg = Rechenweg.Substring(0, Rechenweg.Length - 1);
-                Rechenweg += "="+X;
-                Rechenweg +="\\\\";
+                Rechenweg += "=" + X;
+                Rechenweg += "\\\\";
                 Rechenweg += "X:" + (X % (m_product)) + "\\:Eindeutig \\: bzgl \\: mod \\:" + (m_product);
 
                 return X;
@@ -941,13 +944,14 @@ namespace LinAlg
         private void buttonMillerR_Click(object sender, EventArgs e)
         {
             bool prime = false;
-            SetMainImageAndInfo(doMillerRabin(int.Parse(textBoxMiller_n.Text), BigInteger.Parse(textBoxMiller_a.Text),out prime));
+            SetMainImageAndInfo(doMillerRabin(int.Parse(textBoxMiller_n.Text), BigInteger.Parse(textBoxMiller_a.Text), out prime));
         }
         bool isPrimeRabin(int n)
         {
             bool prime = true;
             String Latex = "";
-            for (int a = 3; a < 15; a++){
+            for (int a = 3; a < 15; a++)
+            {
                 doMillerRabin(n, a, out prime);
                 if (!prime)
                 {
@@ -970,11 +974,11 @@ namespace LinAlg
                 m /= 2;
             }
             // n,m,l,a sind nun bestimmt
-            Latex += String.Format("n={0},a={1},m={2},l={3}\\\\",n,a,m,l);
+            Latex += String.Format("n={0},a={1},m={2},l={3}\\\\", n, a, m, l);
             bool terminate;
             List<BigInteger> x = new List<BigInteger>();
-            x.Add(BigInteger.Pow(a,m) % n);
-            if (x[0] == 1 || x[0] == n-1)
+            x.Add(BigInteger.Pow(a, m) % n);
+            if (x[0] == 1 || x[0] == n - 1)
             {
                 Latex += "prime (line 4)\\\\";
                 prime = true;
@@ -986,7 +990,7 @@ namespace LinAlg
             }
             int i = 1;
             Latex += String.Format(Utils.Ltx("Iteration:0, X_0={0} \\\\"), x[0]);
-            while (terminate == false && i<=l-1)
+            while (terminate == false && i <= l - 1)
             {
                 x.Add((x[i - 1] * x[i - 1]) % n);
                 Latex += String.Format(Utils.Ltx("Iteration:{0}, X_{0}={1} \\\\"), i, x[i]);
@@ -996,12 +1000,13 @@ namespace LinAlg
                     prime = true;
                     terminate = true;
                     break;
-                }else if (x[i] == 1)
+                }
+                else if (x[i] == 1)
                 {
                     prime = false;
                     Latex += Utils.Ltx("not prime (line 16) \\\\");
                     terminate = true;
-                }     
+                }
                 ++i;
             }
             if (!terminate)
@@ -1023,7 +1028,7 @@ namespace LinAlg
 
         private void button7_Click(object sender, EventArgs e)
         {
-            SetMainImageAndInfo(Utils.Ltx(isPrimeRabin(int.Parse(textBoxMiller_n.Text))? "Is a prime":"Is not a prime"));
+            SetMainImageAndInfo(Utils.Ltx(isPrimeRabin(int.Parse(textBoxMiller_n.Text)) ? "Is a prime" : "Is not a prime"));
         }
         private void button9_Click(object sender, EventArgs e)
         {
@@ -1041,20 +1046,22 @@ namespace LinAlg
 
         }
         string currentShownLatex = "";
-        void SetMainImageAndInfo(string LatextoRender,string text=null)
+        void SetMainImageAndInfo(string LatextoRender, string text = null)
         {
-            if (text!=null)
+            if (text != null)
             {
-                textBoxerrinfo.Invoke((MethodInvoker)delegate {
+                textBoxerrinfo.Invoke((MethodInvoker)delegate
+                {
                     textBoxerrinfo.Text = text;
                 });
-            } 
+            }
             if (LatextoRender == null)
             {
                 return;
             }
             currentShownLatex = LatextoRender;
-            LatexViewBox.Invoke((MethodInvoker)delegate {
+            LatexViewBox.Invoke((MethodInvoker)delegate
+            {
                 LatexViewBox.Image = RenderLatex(LatextoRender);
             });
         }
@@ -1065,9 +1072,10 @@ namespace LinAlg
             {
                 TH1.AUTOMAT DFA = new TH1.AUTOMAT(textBoxth1.Text);
                 SetMainImageAndInfo("Table-Filling\\\\" + TH1.TableFilling(DFA));
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-               // textBoxerrinfo.Text = ex.Message;
+                // textBoxerrinfo.Text = ex.Message;
             }
         }
 
@@ -1086,16 +1094,13 @@ namespace LinAlg
                     Clipboard.SetText(currentShownLatex);
                     textBoxerrinfo.Text = "copied Latex";
                 }
-            }catch(Exception ec)
+            }
+            catch (Exception ec)
             {
                 textBoxerrinfo.Text = "Could not copy that";
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            Calculate();
-        }
 
         private void gcd_textBox3_TextChanged(object sender, EventArgs e)
         {
@@ -1132,35 +1137,35 @@ namespace LinAlg
         private void button12_Click(object sender, EventArgs e)
         {
             //SSTF
-                int seekTime = int.Parse(textBoxBSSeek.Text);
-                List<int> spuren = getSpurenInput();
-                var latexTable = Utils.generate(3, spuren.Count+1);
-                latexTable[0][0] = "ZugriffsZeit";
-                latexTable[1][0] = "Spur\t";
-                latexTable[2][0] = "SuchZeit";
-                int current = spuren[0];
+            int seekTime = int.Parse(textBoxBSSeek.Text);
+            List<int> spuren = getSpurenInput();
+            var latexTable = Utils.generate(3, spuren.Count + 1);
+            latexTable[0][0] = "ZugriffsZeit";
+            latexTable[1][0] = "Spur\t";
+            latexTable[2][0] = "SuchZeit";
+            int current = spuren[0];
+            spuren.Remove(current);
+            int time = 0;
+            int Tableindex = 2;
+            latexTable[0][1] = "0";
+            latexTable[1][1] = "" + current;
+            latexTable[2][1] = "0";
+            while (spuren.Count > 0)
+            {
+                var temp = new List<int>(spuren);
+                temp.Sort((A, B) => (Math.Abs(A - current) - Math.Abs(B - current)));
+                int next = temp.ElementAt(0);
+                latexTable[1][Tableindex] = "" + next;
+                int to_travel = Math.Abs((current - next));
+                time += seekTime * to_travel;
+                latexTable[0][Tableindex] = "" + time;
+                latexTable[2][Tableindex] = "" + seekTime * to_travel;
+                current = next;
                 spuren.Remove(current);
-                int time = 0;
-                int Tableindex = 2;
-                latexTable[0][1] = "0";
-                latexTable[1][1] = "" + current;
-                latexTable[2][1] = "0";
-                while (spuren.Count > 0)
-                {
-                    var temp = new List<int>(spuren);
-                    temp.Sort((A, B) => (Math.Abs(A - current) - Math.Abs(B - current)));
-                    int next = temp.ElementAt(0);
-                    latexTable[1][Tableindex] = "" + next;
-                    int to_travel = Math.Abs((current - next));
-                    time += seekTime * to_travel;
-                    latexTable[0][Tableindex] = "" + time;
-                    latexTable[2][Tableindex] = "" + seekTime * to_travel;
-                    current = next;
-                    spuren.Remove(current);
-                    Tableindex++;
-                }
-                SetMainImageAndInfo(Utils.StringArrToLatexMatrix(latexTable),Utils.StringArrToTextTable(latexTable));
-            
+                Tableindex++;
+            }
+            SetMainImageAndInfo(Utils.StringArrToLatexMatrix(latexTable), Utils.StringArrToTextTable(latexTable));
+
         }
 
         private void button13_Click(object sender, EventArgs e)
@@ -1266,7 +1271,7 @@ namespace LinAlg
             string[] xvalues = textBoxNumX.Text.Split(',');
             string[] yvalues = textBoxNumF.Text.Split(',');
             // calculate Divided Differences
-            Matrix CalcTable = new Matrix(xvalues.Length, xvalues.Length+1);
+            Matrix CalcTable = new Matrix(xvalues.Length, xvalues.Length + 1);
             // init x values
             for (int i = 0; i < CalcTable.m; i++)
             {
@@ -1280,13 +1285,13 @@ namespace LinAlg
             }
             for (int i = 2; i < CalcTable.n; i++)
             {
-                for(int c = 0; c< i-2; c++)
+                for (int c = 0; c < i - 2; c++)
                 {
                     KNG P_unten = CalcTable.data[c][i - 1];
                     KNG P_oben = CalcTable.data[c][i - 2];
                     KNG X_unten = CalcTable.data[c][0];
                     KNG X_oben = CalcTable.data[c + i - 2][0];
-                    CalcTable.data[c][i] = (P_unten-P_oben)/(X_unten-X_oben);
+                    CalcTable.data[c][i] = (P_unten - P_oben) / (X_unten - X_oben);
                 }
             }
 
@@ -1324,10 +1329,88 @@ namespace LinAlg
                 {
                     SetMainImageAndInfo(A.ScheduleRR(false), "\\emptyset");
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                SetMainImageAndInfo("err","Error:"+ ex.Message);
+                SetMainImageAndInfo("err", "Error:" + ex.Message);
             }
         }
+
+        private void textBox8_TextChanged_2(object sender, EventArgs e)
+        {
+            // TODO implement
+        }
+        private void button17_Click(object sender, EventArgs e)
+        {
+
+        }
+        
+        void UpdateRDBDRCTRC()
+        {
+                try
+                {
+                    string processed = richTextBoxRDB1SET.Text;
+
+                    Regex usedmacros = new Regex(@"(?<FUNC>\w+)\[(?<param>[a-z.A-Z,äüßöÄÜß_]+)\]");
+                    var matches = usedmacros.Matches(processed);
+                    while (matches.Count > 0)
+                    {
+                        foreach (Match match in matches)
+                        {
+                            string newText = "";
+                            string func = match.Groups["FUNC"].ToString();
+                            string param = match.Groups["param"].ToString();
+                            string variable = param.Split(',')[0].Split('.')[0];
+                            string attribute = param.Split(',')[0].Split('.')[1];
+                            string table = param.Split(',')[1];
+                            switch (comboBoxRDB.Text)
+                            {
+                                case "TRC":
+                                    switch (func)
+                                    {
+                                        case "MAX":
+                                            newText = table + "(" + variable + ") AND NOT EXISTS y(" + table + "(y) AND y." + attribute + " < " + variable + "." + attribute + ")";
+                                            break;
+                                        case "MIN":
+                                            newText = table + "(" + variable + ") AND NOT EXISTS y(" + table + "(y) AND y." + attribute + " > " + variable + "." + attribute + ")";
+                                            break;
+                                    }
+                                    break;
+                                case "DRC":
+                                    switch (func)
+                                    {
+                                        case "MAX":
+                                            newText = "" + table + "(x1,x2, x3) AND NOT EXISTS y1, y2, " + param + "_alt (" + table + "(a2, b2, id2) AND " + param + "_alt < " + param + ")}";
+                                            break;
+                                        case "MIN":
+                                            newText = "" + table + "(x1,x2, x3) AND NOT EXISTS y1, y2, " + param + "_alt (" + table + "(a2, b2, id2) AND " + param + "_alt > " + param + ")}";
+                                            break;
+                                    }
+                                    break;
+                            }
+                            processed = processed.Remove(match.Index, match.Length).Insert(match.Index, newText);
+                            richTextBoxRDB1SET.Text = processed;
+                        }
+                        matches = usedmacros.Matches(processed);
+                    }
+                }
+                catch (Exception e)
+                {
+                    SetMainImageAndInfo(null, "Error parsing makros TRC requires syntax variable.attribute" + e.Message);
+                }
+              //   highlightWords(ref richTextBoxRDB1SET, TRCDRCKEYWORDS);
+                // highlightAssociatedBracketIfApplicable(ref richTextBoxRDB1SET);
+              //  userSelection = true;
+            }
+        
+        
+        
+        private void richTextBoxRDB1SET_TextChanged(object sender, EventArgs e)
+        {
+                UpdateRDBDRCTRC();
+        }
+
     }
 }
+
+
