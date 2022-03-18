@@ -6,14 +6,51 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
+using UniRechner;
+
 namespace LinAlg
 {
     // A class which manages access to this software
     class DRM
     {
+        static string salt = "s2398rhfionwchwgisdvn&87530";
+        public static bool EnsureActivation()
+        {
+            while (GetLicenseKey() == null || !DRM.ActivateSoftware(GetLicenseKey()))
+            {
+                var x = new ActivateForm(GetCpuID());
+                x.ShowDialog();
+                if (x.activateclicked==false)
+                {
+                    return false;
+                }
+                SaveLicenseKey(x.key);
+               // Console.WriteLine(generateLicenseKey());
+            }
+            return true;
+        }
+        public static void SaveLicenseKey(string license)
+        {
+            const string userRoot = "HKEY_CURRENT_USER";
+            const string subkey = "UniRechnerKeys";
+            const string keyName = userRoot + "\\" + subkey;
+            Registry.SetValue(keyName, "License",license);
+        }
+
+        public static String generateLicenseKey()
+        {
+            return (GetHash(GetCpuID() + salt));
+        }
+        public static string GetLicenseKey()
+        {
+            const string userRoot = "HKEY_CURRENT_USER";
+            const string subkey = "UniRechnerKeys";
+            const string keyName = userRoot + "\\" + subkey;
+            return (String)Registry.GetValue(keyName, "License", null);
+        }
         public static bool ActivateSoftware(string LicenseKey)
         {
-            if (VerifyHash(GetCpuID(), "1219b1c575b61dc6559049b2c863d468e5b8b04811e2d1845e738a410a5b3340"))
+            if (VerifyHash(GetCpuID()+salt, LicenseKey))
             {
                 return true;
             }

@@ -12,9 +12,24 @@ namespace UniRechner
 {
     public partial class ActivateForm : Form
     {
-        public ActivateForm()
+        public string key = "";
+        public bool activateclicked = false;
+        public ActivateForm(String cpuid)
         {
             InitializeComponent();
+            textBox1.Text = cpuid;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            Clipboard.SetText(textBox1.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            key = textBoxKey.Text;
+            activateclicked = true;
+            this.Close();
         }
     }
 }
