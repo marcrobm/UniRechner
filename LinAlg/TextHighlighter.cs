@@ -13,14 +13,15 @@ namespace UniRechner
     {
         RichTextBox box;
         bool userSelection = true;
-
+        // highlighting
         (string s, Color c)[] toHighlight = new (string s, Color c)[] {
             ("AND",Color.Green), ("OR",Color.Green), ("NOT",Color.Green),
             ("FORALL",Color.Green), ("EXISTS",Color.Green),
             ("->",Color.Green),
             ("<=",Color.Green), (">=",Color.Green),("<>",Color.Green),("!=",Color.Green),
-            ("|",Color.Red),("{",Color.Red),("}",Color.Red)
-
+            ("|",Color.Red),("{",Color.Red),("}",Color.Red),
+            ("SELECT",Color.Orange),("FROM",Color.Orange),("WHERE",Color.Orange),("HAVING",Color.Orange),("GROUP",Color.Orange),("BY",Color.Orange),
+            ("CREATE",Color.Orange),("TABLE",Color.Orange),("TRIGGER",Color.Orange),("ON",Color.Orange),("WHEN",Color.Orange),("BEGINN",Color.Orange),("END",Color.Orange)
         };
         Color errorBracketHighlight = Color.Red;
         Color BracketHighlight = Color.DarkSlateBlue;

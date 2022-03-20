@@ -442,7 +442,7 @@ namespace LinAlg
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(380, 456);
+            this.tabPage8.Size = new System.Drawing.Size(478, 461);
             this.tabPage8.TabIndex = 1;
             this.tabPage8.Text = "Other";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -604,7 +604,7 @@ namespace LinAlg
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(380, 456);
+            this.tabPage10.Size = new System.Drawing.Size(478, 461);
             this.tabPage10.TabIndex = 1;
             this.tabPage10.Text = "Erastothenes";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -631,7 +631,7 @@ namespace LinAlg
             this.tabPage11.Controls.Add(this.textBoxChinRest);
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Size = new System.Drawing.Size(380, 456);
+            this.tabPage11.Size = new System.Drawing.Size(478, 461);
             this.tabPage11.TabIndex = 2;
             this.tabPage11.Text = "Chinesischer Restsatz";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -643,7 +643,7 @@ namespace LinAlg
             this.textBoxChinRest.Location = new System.Drawing.Point(0, 0);
             this.textBoxChinRest.Multiline = true;
             this.textBoxChinRest.Name = "textBoxChinRest";
-            this.textBoxChinRest.Size = new System.Drawing.Size(380, 456);
+            this.textBoxChinRest.Size = new System.Drawing.Size(478, 461);
             this.textBoxChinRest.TabIndex = 0;
             this.textBoxChinRest.Text = "x = 2 mod 3\r\nx = 3 mod 5\r\nx = 4 mod 7";
             this.textBoxChinRest.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
@@ -658,7 +658,7 @@ namespace LinAlg
             this.tabPage12.Controls.Add(this.textBoxMiller_n);
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Size = new System.Drawing.Size(380, 456);
+            this.tabPage12.Size = new System.Drawing.Size(478, 461);
             this.tabPage12.TabIndex = 3;
             this.tabPage12.Text = "Miller-Rabin";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -728,7 +728,7 @@ namespace LinAlg
             this.tabPage13.Controls.Add(this.gcd_textBox3);
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
-            this.tabPage13.Size = new System.Drawing.Size(380, 456);
+            this.tabPage13.Size = new System.Drawing.Size(478, 461);
             this.tabPage13.TabIndex = 4;
             this.tabPage13.Text = "gcd";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -1302,7 +1302,7 @@ namespace LinAlg
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 500F));
@@ -1311,13 +1311,13 @@ namespace LinAlg
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.tableLayoutPanel1.ImeMode = System.Windows.Forms.ImeMode.On;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.75343F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.246573F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1082, 578);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1196, 578);
             this.tableLayoutPanel1.TabIndex = 8;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -1340,12 +1340,12 @@ namespace LinAlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1082, 578);
+            this.ClientSize = new System.Drawing.Size(1196, 578);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(600, 500);
             this.Name = "Form1";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Uni Rechner";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
@@ -1407,7 +1407,6 @@ namespace LinAlg
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
