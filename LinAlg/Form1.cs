@@ -28,7 +28,7 @@ namespace LinAlg
             }
             textBox5.Text = File.ReadAllText("Koerper\\" + comboBox1.Text + ".js");
 
-            mainCresize = new CollumResizer(ref tableLayoutPanel1,15);
+            mainCresize = new CollumResizer(ref tableLayoutPanel1, 15);
 
         }
         TextHighlighter rdbcodebox;
@@ -1344,71 +1344,91 @@ namespace LinAlg
         {
 
         }
-        
+
         void UpdateRDBDRCTRC()
         {
-                try
-                {
-                    string processed = richTextBoxRDB1SET.Text;
+            try
+            {
+                string processed = richTextBoxRDB1SET.Text;
 
-                    Regex usedmacros = new Regex(@"(?<FUNC>\w+)\[(?<param>[a-z.A-Z,äüßöÄÜß_]+)\]");
-                    var matches = usedmacros.Matches(processed);
-                    while (matches.Count > 0)
-                    {
-                        foreach (Match match in matches)
-                        {
-                            string newText = "";
-                            string func = match.Groups["FUNC"].ToString();
-                            string param = match.Groups["param"].ToString();
-                            string variable = param.Split(',')[0].Split('.')[0];
-                            string attribute = param.Split(',')[0].Split('.')[1];
-                            string table = param.Split(',')[1];
-                            switch (comboBoxRDB.Text)
-                            {
-                                case "TRC":
-                                    switch (func)
-                                    {
-                                        case "MAX":
-                                            newText = table + "(" + variable + ") AND NOT EXISTS y(" + table + "(y) AND y." + attribute + " < " + variable + "." + attribute + ")";
-                                            break;
-                                        case "MIN":
-                                            newText = table + "(" + variable + ") AND NOT EXISTS y(" + table + "(y) AND y." + attribute + " > " + variable + "." + attribute + ")";
-                                            break;
-                                    }
-                                    break;
-                                case "DRC":
-                                    switch (func)
-                                    {
-                                        case "MAX":
-                                            newText = "" + table + "(x1,x2, x3) AND NOT EXISTS y1, y2, " + param + "_alt (" + table + "(a2, b2, id2) AND " + param + "_alt < " + param + ")}";
-                                            break;
-                                        case "MIN":
-                                            newText = "" + table + "(x1,x2, x3) AND NOT EXISTS y1, y2, " + param + "_alt (" + table + "(a2, b2, id2) AND " + param + "_alt > " + param + ")}";
-                                            break;
-                                    }
-                                    break;
-                            }
-                            processed = processed.Remove(match.Index, match.Length).Insert(match.Index, newText);
-                            richTextBoxRDB1SET.Text = processed;
-                        }
-                        matches = usedmacros.Matches(processed);
-                    }
-                }
-                catch (Exception e)
+                Regex usedmacros = new Regex(@"(?<FUNC>\w+)\[(?<param>[a-z.A-Z,äüßöÄÜß_]+)\]");
+                var matches = usedmacros.Matches(processed);
+                while (matches.Count > 0)
                 {
-                    SetMainImageAndInfo(null, "Error parsing makros TRC requires syntax variable.attribute" + e.Message);
+                    foreach (Match match in matches)
+                    {
+                        string newText = "";
+                        string func = match.Groups["FUNC"].ToString();
+                        string param = match.Groups["param"].ToString();
+                        string variable = param.Split(',')[0].Split('.')[0];
+                        string attribute = param.Split(',')[0].Split('.')[1];
+                        string table = param.Split(',')[1];
+                        switch (comboBoxRDB.Text)
+                        {
+                            case "TRC":
+                                switch (func)
+                                {
+                                    case "MAX":
+                                        newText = table + "(" + variable + ") AND NOT EXISTS y(" + table + "(y) AND y." + attribute + " < " + variable + "." + attribute + ")";
+                                        break;
+                                    case "MIN":
+                                        newText = table + "(" + variable + ") AND NOT EXISTS y(" + table + "(y) AND y." + attribute + " > " + variable + "." + attribute + ")";
+                                        break;
+                                }
+                                break;
+                            case "DRC":
+                                switch (func)
+                                {
+                                    case "MAX":
+                                        newText = "" + table + "(x1,x2, x3) AND NOT EXISTS y1, y2, " + param + "_alt (" + table + "(a2, b2, id2) AND " + param + "_alt < " + param + ")}";
+                                        break;
+                                    case "MIN":
+                                        newText = "" + table + "(x1,x2, x3) AND NOT EXISTS y1, y2, " + param + "_alt (" + table + "(a2, b2, id2) AND " + param + "_alt > " + param + ")}";
+                                        break;
+                                }
+                                break;
+                        }
+                        processed = processed.Remove(match.Index, match.Length).Insert(match.Index, newText);
+                        richTextBoxRDB1SET.Text = processed;
+                    }
+                    matches = usedmacros.Matches(processed);
                 }
-              //   highlightWords(ref richTextBoxRDB1SET, TRCDRCKEYWORDS);
-                // highlightAssociatedBracketIfApplicable(ref richTextBoxRDB1SET);
-              //  userSelection = true;
             }
-        
-        
-        
+            catch (Exception e)
+            {
+                SetMainImageAndInfo(null, "Error parsing makros TRC requires syntax variable.attribute" + e.Message);
+            }
+            //   highlightWords(ref richTextBoxRDB1SET, TRCDRCKEYWORDS);
+            // highlightAssociatedBracketIfApplicable(ref richTextBoxRDB1SET);
+            //  userSelection = true;
+        }
+
+
+
         private void richTextBoxRDB1SET_TextChanged(object sender, EventArgs e)
         {
-                UpdateRDBDRCTRC();
+            UpdateRDBDRCTRC();
         }
+
+        private void button17_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string input = textBoxRTFMission.Text;
+                Regex format = new Regex(@"(?<var>\w+)\=(?<value>\w+)");
+                var Matches = format.Matches(input);
+                string newMatches = KNG.K_Functions;
+                Dictionary<string, string> value = new Dictionary<string, string>();
+                foreach (Match match in Matches)
+                {
+                    value[match.Groups["var"].ToString()] = match.Groups["value"].ToString();
+                }
+                SetMainImageAndInfo(RTF1.CalculateInterplanetaryMissionAsTex(value["StartPlanet"], value["ZielPlanet"], double.Parse(value["StartHoehe"]), double.Parse(value["ZielHoehe"])));
+            }catch(Exception ex)
+            {
+                SetMainImageAndInfo(null, ex.Message);
+            }
+            }
 
     }
 }

@@ -116,7 +116,8 @@ namespace LinAlg
             this.textBoxBSSeek = new System.Windows.Forms.TextBox();
             this.textBoxBsSpuren = new System.Windows.Forms.TextBox();
             this.tabPage15 = new System.Windows.Forms.TabPage();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.button17 = new System.Windows.Forms.Button();
+            this.textBoxRTFMission = new System.Windows.Forms.TextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.RDB = new System.Windows.Forms.TabPage();
@@ -189,7 +190,7 @@ namespace LinAlg
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(494, 513);
+            this.tabControl1.Size = new System.Drawing.Size(394, 513);
             this.tabControl1.TabIndex = 4;
             // 
             // tabPage3
@@ -197,7 +198,7 @@ namespace LinAlg
             this.tabPage3.Controls.Add(this.tableLayoutPanel3);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(486, 487);
+            this.tabPage3.Size = new System.Drawing.Size(386, 487);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "LinAlg";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -218,7 +219,7 @@ namespace LinAlg
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(486, 487);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(386, 487);
             this.tableLayoutPanel3.TabIndex = 7;
             // 
             // textBox3
@@ -229,7 +230,7 @@ namespace LinAlg
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox3.Size = new System.Drawing.Size(480, 203);
+            this.textBox3.Size = new System.Drawing.Size(380, 203);
             this.textBox3.TabIndex = 1;
             this.textBox3.Text = "A={1,0,-1,5,1}{1,1,1,7,3}{2,2,0,8,2}{2,2,1,8,1}{2,2,1,8,5}\r\nB={0,3}{0,0}{0,0}{1,0" +
     "}{0,0}\r\nD={3,0}{0,2}";
@@ -243,7 +244,7 @@ namespace LinAlg
             this.textBox4.Location = new System.Drawing.Point(3, 280);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(480, 204);
+            this.textBox4.Size = new System.Drawing.Size(380, 204);
             this.textBox4.TabIndex = 4;
             this.textBox4.Text = "X=RREF(A)\r\nY=Multiply(A,A,A,B)";
             this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
@@ -274,7 +275,7 @@ namespace LinAlg
             this.tabPage4.Controls.Add(this.tableLayoutPanel4);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(486, 487);
+            this.tabPage4.Size = new System.Drawing.Size(386, 487);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Koerper";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -291,7 +292,7 @@ namespace LinAlg
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(486, 487);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(386, 487);
             this.tableLayoutPanel4.TabIndex = 4;
             // 
             // textBox5
@@ -302,7 +303,7 @@ namespace LinAlg
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
             this.textBox5.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox5.Size = new System.Drawing.Size(480, 407);
+            this.textBox5.Size = new System.Drawing.Size(380, 407);
             this.textBox5.TabIndex = 0;
             this.textBox5.WordWrap = false;
             // 
@@ -318,7 +319,7 @@ namespace LinAlg
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(480, 68);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(380, 68);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // button4
@@ -326,7 +327,7 @@ namespace LinAlg
             this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button4.Location = new System.Drawing.Point(3, 3);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(234, 62);
+            this.button4.Size = new System.Drawing.Size(184, 62);
             this.button4.TabIndex = 3;
             this.button4.Text = "save";
             this.button4.UseVisualStyleBackColor = true;
@@ -336,9 +337,9 @@ namespace LinAlg
             // 
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.4F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.Location = new System.Drawing.Point(243, 3);
+            this.comboBox1.Location = new System.Drawing.Point(193, 3);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(234, 39);
+            this.comboBox1.Size = new System.Drawing.Size(184, 39);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.Text = "Real";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
@@ -348,7 +349,7 @@ namespace LinAlg
             this.tabPage1.Controls.Add(this.tabControl2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(486, 487);
+            this.tabPage1.Size = new System.Drawing.Size(386, 487);
             this.tabPage1.TabIndex = 4;
             this.tabPage1.Text = "AUD2";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -361,7 +362,7 @@ namespace LinAlg
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(486, 487);
+            this.tabControl2.Size = new System.Drawing.Size(386, 487);
             this.tabControl2.TabIndex = 16;
             // 
             // tabPage7
@@ -370,7 +371,7 @@ namespace LinAlg
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(478, 461);
+            this.tabPage7.Size = new System.Drawing.Size(378, 461);
             this.tabPage7.TabIndex = 0;
             this.tabPage7.Text = "Hashing";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -389,7 +390,7 @@ namespace LinAlg
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.92203F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.07797F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(472, 455);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(372, 455);
             this.tableLayoutPanel6.TabIndex = 5;
             // 
             // label7
@@ -408,7 +409,7 @@ namespace LinAlg
             this.textBoxDatahash.Location = new System.Drawing.Point(3, 376);
             this.textBoxDatahash.Multiline = true;
             this.textBoxDatahash.Name = "textBoxDatahash";
-            this.textBoxDatahash.Size = new System.Drawing.Size(466, 76);
+            this.textBoxDatahash.Size = new System.Drawing.Size(366, 76);
             this.textBoxDatahash.TabIndex = 4;
             this.textBoxDatahash.Tag = "";
             this.textBoxDatahash.Text = "1 3 4 ~3";
@@ -422,7 +423,7 @@ namespace LinAlg
             this.textBoxHashfkt.Multiline = true;
             this.textBoxHashfkt.Name = "textBoxHashfkt";
             this.textBoxHashfkt.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.textBoxHashfkt.Size = new System.Drawing.Size(466, 317);
+            this.textBoxHashfkt.Size = new System.Drawing.Size(366, 317);
             this.textBoxHashfkt.TabIndex = 0;
             this.textBoxHashfkt.Text = "var mapsize = 13;\r\nfunction Hash(x, i){\r\nreturn (x + i)%13;\r\n}";
             this.textBoxHashfkt.TextChanged += new System.EventHandler(this.textBoxHashfkt_TextChanged);
@@ -442,7 +443,7 @@ namespace LinAlg
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(478, 461);
+            this.tabPage8.Size = new System.Drawing.Size(378, 461);
             this.tabPage8.TabIndex = 1;
             this.tabPage8.Text = "Other";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -549,7 +550,7 @@ namespace LinAlg
             this.tabPage5.Controls.Add(this.tabControl3);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(486, 487);
+            this.tabPage5.Size = new System.Drawing.Size(386, 487);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Algebra";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -565,7 +566,7 @@ namespace LinAlg
             this.tabControl3.Location = new System.Drawing.Point(0, 0);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(486, 487);
+            this.tabControl3.Size = new System.Drawing.Size(386, 487);
             this.tabControl3.TabIndex = 6;
             // 
             // tabPage9
@@ -575,7 +576,7 @@ namespace LinAlg
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(478, 461);
+            this.tabPage9.Size = new System.Drawing.Size(378, 461);
             this.tabPage9.TabIndex = 0;
             this.tabPage9.Text = "Fermat";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -604,7 +605,7 @@ namespace LinAlg
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(478, 461);
+            this.tabPage10.Size = new System.Drawing.Size(378, 461);
             this.tabPage10.TabIndex = 1;
             this.tabPage10.Text = "Erastothenes";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -631,7 +632,7 @@ namespace LinAlg
             this.tabPage11.Controls.Add(this.textBoxChinRest);
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Size = new System.Drawing.Size(478, 461);
+            this.tabPage11.Size = new System.Drawing.Size(378, 461);
             this.tabPage11.TabIndex = 2;
             this.tabPage11.Text = "Chinesischer Restsatz";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -643,7 +644,7 @@ namespace LinAlg
             this.textBoxChinRest.Location = new System.Drawing.Point(0, 0);
             this.textBoxChinRest.Multiline = true;
             this.textBoxChinRest.Name = "textBoxChinRest";
-            this.textBoxChinRest.Size = new System.Drawing.Size(478, 461);
+            this.textBoxChinRest.Size = new System.Drawing.Size(378, 461);
             this.textBoxChinRest.TabIndex = 0;
             this.textBoxChinRest.Text = "x = 2 mod 3\r\nx = 3 mod 5\r\nx = 4 mod 7";
             this.textBoxChinRest.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
@@ -658,7 +659,7 @@ namespace LinAlg
             this.tabPage12.Controls.Add(this.textBoxMiller_n);
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Size = new System.Drawing.Size(478, 461);
+            this.tabPage12.Size = new System.Drawing.Size(378, 461);
             this.tabPage12.TabIndex = 3;
             this.tabPage12.Text = "Miller-Rabin";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -728,7 +729,7 @@ namespace LinAlg
             this.tabPage13.Controls.Add(this.gcd_textBox3);
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
-            this.tabPage13.Size = new System.Drawing.Size(478, 461);
+            this.tabPage13.Size = new System.Drawing.Size(378, 461);
             this.tabPage13.TabIndex = 4;
             this.tabPage13.Text = "gcd";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -761,7 +762,7 @@ namespace LinAlg
             this.tabPage2.Controls.Add(this.button8);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(486, 487);
+            this.tabPage2.Size = new System.Drawing.Size(386, 487);
             this.tabPage2.TabIndex = 7;
             this.tabPage2.Text = "Numerik";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -821,7 +822,7 @@ namespace LinAlg
             this.tabPage14.Controls.Add(this.tableLayoutPanel7);
             this.tabPage14.Location = new System.Drawing.Point(4, 22);
             this.tabPage14.Name = "tabPage14";
-            this.tabPage14.Size = new System.Drawing.Size(486, 487);
+            this.tabPage14.Size = new System.Drawing.Size(386, 487);
             this.tabPage14.TabIndex = 8;
             this.tabPage14.Text = "TH1";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -839,7 +840,7 @@ namespace LinAlg
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.52459F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.47541F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(486, 487);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(386, 487);
             this.tableLayoutPanel7.TabIndex = 0;
             // 
             // textBoxth1
@@ -849,7 +850,7 @@ namespace LinAlg
             this.textBoxth1.Multiline = true;
             this.textBoxth1.Name = "textBoxth1";
             this.textBoxth1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxth1.Size = new System.Drawing.Size(480, 425);
+            this.textBoxth1.Size = new System.Drawing.Size(380, 425);
             this.textBoxth1.TabIndex = 0;
             this.textBoxth1.Text = "STARTNODE:0\r\nNODES:0 1 2 12 02 012\r\nFINALNODES: 0 2 12 02 012\r\n>0 a 12\r\n>0 b 02\r\n" +
     ">1 a 02\r\n>1 b 012\r\n>2 b 1\r\n>2 a 2\r\n>12 a 02\r\n>12 b 012\r\n>02 a 12\r\n>02 b 12\r\n>012" +
@@ -860,7 +861,7 @@ namespace LinAlg
             this.button10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button10.Location = new System.Drawing.Point(3, 434);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(480, 50);
+            this.button10.Size = new System.Drawing.Size(380, 50);
             this.button10.TabIndex = 1;
             this.button10.Text = "Table Filling";
             this.button10.UseVisualStyleBackColor = true;
@@ -871,7 +872,7 @@ namespace LinAlg
             this.tabPageBS.Controls.Add(this.tabControl4);
             this.tabPageBS.Location = new System.Drawing.Point(4, 22);
             this.tabPageBS.Name = "tabPageBS";
-            this.tabPageBS.Size = new System.Drawing.Size(486, 487);
+            this.tabPageBS.Size = new System.Drawing.Size(386, 487);
             this.tabPageBS.TabIndex = 9;
             this.tabPageBS.Text = "BS";
             this.tabPageBS.UseVisualStyleBackColor = true;
@@ -884,7 +885,7 @@ namespace LinAlg
             this.tabControl4.Location = new System.Drawing.Point(0, 0);
             this.tabControl4.Name = "tabControl4";
             this.tabControl4.SelectedIndex = 0;
-            this.tabControl4.Size = new System.Drawing.Size(486, 487);
+            this.tabControl4.Size = new System.Drawing.Size(386, 487);
             this.tabControl4.TabIndex = 5;
             // 
             // tabPage16
@@ -894,7 +895,7 @@ namespace LinAlg
             this.tabPage16.Location = new System.Drawing.Point(4, 22);
             this.tabPage16.Name = "tabPage16";
             this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage16.Size = new System.Drawing.Size(478, 461);
+            this.tabPage16.Size = new System.Drawing.Size(378, 461);
             this.tabPage16.TabIndex = 0;
             this.tabPage16.Text = "Scheduling";
             this.tabPage16.UseVisualStyleBackColor = true;
@@ -912,7 +913,7 @@ namespace LinAlg
             this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(472, 455);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(372, 455);
             this.tableLayoutPanel8.TabIndex = 5;
             this.tableLayoutPanel8.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel8_Paint);
             // 
@@ -929,7 +930,7 @@ namespace LinAlg
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(466, 222);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(366, 222);
             this.tableLayoutPanel9.TabIndex = 2;
             // 
             // label10
@@ -938,7 +939,7 @@ namespace LinAlg
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.3F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(3, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(84, 75);
+            this.label10.Size = new System.Drawing.Size(72, 90);
             this.label10.TabIndex = 3;
             this.label10.Text = "Format: (CPU=Anzahl)\r\nnamen\r\nBedienzeit\r\nAnkunftszeit";
             // 
@@ -952,14 +953,14 @@ namespace LinAlg
             this.tableLayoutPanel10.Controls.Add(this.button9, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.button11, 0, 1);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(102, 3);
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(81, 3);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 4;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(361, 216);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(282, 216);
             this.tableLayoutPanel10.TabIndex = 4;
             // 
             // button16
@@ -967,7 +968,7 @@ namespace LinAlg
             this.button16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button16.Location = new System.Drawing.Point(3, 171);
             this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(355, 42);
+            this.button16.Size = new System.Drawing.Size(276, 42);
             this.button16.TabIndex = 5;
             this.button16.Text = "RR (Round Robin)";
             this.button16.UseVisualStyleBackColor = true;
@@ -978,7 +979,7 @@ namespace LinAlg
             this.button15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button15.Location = new System.Drawing.Point(3, 106);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(355, 59);
+            this.button15.Size = new System.Drawing.Size(276, 59);
             this.button15.TabIndex = 4;
             this.button15.Text = "SRTF (Shortest Remaining Timeframe Next)";
             this.button15.UseVisualStyleBackColor = true;
@@ -989,7 +990,7 @@ namespace LinAlg
             this.button9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button9.Location = new System.Drawing.Point(3, 3);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(355, 44);
+            this.button9.Size = new System.Drawing.Size(276, 44);
             this.button9.TabIndex = 2;
             this.button9.Text = "FCFS (First Come First Serve)";
             this.button9.UseVisualStyleBackColor = true;
@@ -1000,7 +1001,7 @@ namespace LinAlg
             this.button11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button11.Location = new System.Drawing.Point(3, 53);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(355, 47);
+            this.button11.Size = new System.Drawing.Size(276, 47);
             this.button11.TabIndex = 3;
             this.button11.Text = "SPN (Shortest Process Next)";
             this.button11.UseVisualStyleBackColor = true;
@@ -1019,7 +1020,7 @@ namespace LinAlg
             this.tableLayoutPanel11.RowCount = 1;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(466, 221);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(366, 221);
             this.tableLayoutPanel11.TabIndex = 6;
             // 
             // textBoxBSProc
@@ -1028,7 +1029,7 @@ namespace LinAlg
             this.textBoxBSProc.Location = new System.Drawing.Point(3, 3);
             this.textBoxBSProc.Multiline = true;
             this.textBoxBSProc.Name = "textBoxBSProc";
-            this.textBoxBSProc.Size = new System.Drawing.Size(227, 215);
+            this.textBoxBSProc.Size = new System.Drawing.Size(177, 215);
             this.textBoxBSProc.TabIndex = 1;
             this.textBoxBSProc.Text = "a b c d e f g h i\r\n6 3 2 4 4 5 1 3 3\r\n1 1 1 1 1 1 1 1 1\r\n(CPU=3)\r\n(FRAME=2)\r\nMINS" +
     "WAP";
@@ -1036,10 +1037,10 @@ namespace LinAlg
             // textBoxBSGraph
             // 
             this.textBoxBSGraph.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxBSGraph.Location = new System.Drawing.Point(236, 3);
+            this.textBoxBSGraph.Location = new System.Drawing.Point(186, 3);
             this.textBoxBSGraph.Multiline = true;
             this.textBoxBSGraph.Name = "textBoxBSGraph";
-            this.textBoxBSGraph.Size = new System.Drawing.Size(227, 215);
+            this.textBoxBSGraph.Size = new System.Drawing.Size(177, 215);
             this.textBoxBSGraph.TabIndex = 2;
             this.textBoxBSGraph.Text = "b>h\r\nh>d\r\nh>e\r\na>c\r\ni>g\r\ng>f";
             this.textBoxBSGraph.TextChanged += new System.EventHandler(this.textBox8_TextChanged_1);
@@ -1065,7 +1066,7 @@ namespace LinAlg
             this.tabPage17.Location = new System.Drawing.Point(4, 22);
             this.tabPage17.Name = "tabPage17";
             this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage17.Size = new System.Drawing.Size(478, 461);
+            this.tabPage17.Size = new System.Drawing.Size(378, 461);
             this.tabPage17.TabIndex = 1;
             this.tabPage17.Text = "Disk";
             this.tabPage17.UseVisualStyleBackColor = true;
@@ -1136,28 +1137,40 @@ namespace LinAlg
             // 
             // tabPage15
             // 
-            this.tabPage15.Controls.Add(this.textBox6);
+            this.tabPage15.Controls.Add(this.button17);
+            this.tabPage15.Controls.Add(this.textBoxRTFMission);
             this.tabPage15.Location = new System.Drawing.Point(4, 22);
             this.tabPage15.Name = "tabPage15";
-            this.tabPage15.Size = new System.Drawing.Size(486, 487);
+            this.tabPage15.Size = new System.Drawing.Size(386, 487);
             this.tabPage15.TabIndex = 10;
             this.tabPage15.Text = "RTF-1";
             this.tabPage15.UseVisualStyleBackColor = true;
             // 
-            // textBox6
+            // button17
             // 
-            this.textBox6.Location = new System.Drawing.Point(3, 14);
-            this.textBox6.Multiline = true;
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(231, 365);
-            this.textBox6.TabIndex = 0;
+            this.button17.Location = new System.Drawing.Point(4, 188);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(370, 23);
+            this.button17.TabIndex = 1;
+            this.button17.Text = "Calculate Mission";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click_1);
+            // 
+            // textBoxRTFMission
+            // 
+            this.textBoxRTFMission.Location = new System.Drawing.Point(3, 3);
+            this.textBoxRTFMission.Multiline = true;
+            this.textBoxRTFMission.Name = "textBoxRTFMission";
+            this.textBoxRTFMission.Size = new System.Drawing.Size(371, 178);
+            this.textBoxRTFMission.TabIndex = 0;
+            this.textBoxRTFMission.Text = "StartHoehe=200\r\nZielHoehe=1500\r\nStartPlanet=E\r\nZielPlanet=M";
             // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.textBox7);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(486, 487);
+            this.tabPage6.Size = new System.Drawing.Size(386, 487);
             this.tabPage6.TabIndex = 6;
             this.tabPage6.Text = "Credits";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1170,7 +1183,7 @@ namespace LinAlg
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
             this.textBox7.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox7.Size = new System.Drawing.Size(486, 487);
+            this.textBox7.Size = new System.Drawing.Size(386, 487);
             this.textBox7.TabIndex = 0;
             this.textBox7.Text = resources.GetString("textBox7.Text");
             this.textBox7.WordWrap = false;
@@ -1180,7 +1193,7 @@ namespace LinAlg
             this.RDB.Controls.Add(this.tabControl5);
             this.RDB.Location = new System.Drawing.Point(4, 22);
             this.RDB.Name = "RDB";
-            this.RDB.Size = new System.Drawing.Size(486, 487);
+            this.RDB.Size = new System.Drawing.Size(386, 487);
             this.RDB.TabIndex = 11;
             this.RDB.Text = "RDB1";
             this.RDB.UseVisualStyleBackColor = true;
@@ -1193,7 +1206,7 @@ namespace LinAlg
             this.tabControl5.Location = new System.Drawing.Point(0, 0);
             this.tabControl5.Name = "tabControl5";
             this.tabControl5.SelectedIndex = 0;
-            this.tabControl5.Size = new System.Drawing.Size(486, 487);
+            this.tabControl5.Size = new System.Drawing.Size(386, 487);
             this.tabControl5.TabIndex = 3;
             // 
             // TRCtab
@@ -1202,7 +1215,7 @@ namespace LinAlg
             this.TRCtab.Location = new System.Drawing.Point(4, 22);
             this.TRCtab.Name = "TRCtab";
             this.TRCtab.Padding = new System.Windows.Forms.Padding(3);
-            this.TRCtab.Size = new System.Drawing.Size(478, 461);
+            this.TRCtab.Size = new System.Drawing.Size(378, 461);
             this.TRCtab.TabIndex = 0;
             this.TRCtab.Text = "TRC+DRC";
             this.TRCtab.UseVisualStyleBackColor = true;
@@ -1219,7 +1232,7 @@ namespace LinAlg
             this.tableLayoutPanel12.RowCount = 2;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(472, 455);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(372, 455);
             this.tableLayoutPanel12.TabIndex = 4;
             // 
             // richTextBoxRDB1SET
@@ -1228,7 +1241,7 @@ namespace LinAlg
             this.richTextBoxRDB1SET.Font = new System.Drawing.Font("Source Code Pro Semibold", 14.1F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxRDB1SET.Location = new System.Drawing.Point(3, 23);
             this.richTextBoxRDB1SET.Name = "richTextBoxRDB1SET";
-            this.richTextBoxRDB1SET.Size = new System.Drawing.Size(466, 429);
+            this.richTextBoxRDB1SET.Size = new System.Drawing.Size(366, 429);
             this.richTextBoxRDB1SET.TabIndex = 2;
             this.richTextBoxRDB1SET.Text = "{ a.position | \nAnlegestelle(a) AND NOT EXISTS m(Maut(m) AND m.kname=a.kname))\n}";
             this.richTextBoxRDB1SET.TextChanged += new System.EventHandler(this.richTextBoxRDB1SET_TextChanged);
@@ -1242,7 +1255,7 @@ namespace LinAlg
             "DRC"});
             this.comboBoxRDB.Location = new System.Drawing.Point(3, 3);
             this.comboBoxRDB.Name = "comboBoxRDB";
-            this.comboBoxRDB.Size = new System.Drawing.Size(466, 21);
+            this.comboBoxRDB.Size = new System.Drawing.Size(366, 21);
             this.comboBoxRDB.TabIndex = 3;
             this.comboBoxRDB.Text = "TRC";
             // 
@@ -1252,7 +1265,7 @@ namespace LinAlg
             this.tabPage19.Location = new System.Drawing.Point(4, 22);
             this.tabPage19.Name = "tabPage19";
             this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage19.Size = new System.Drawing.Size(478, 461);
+            this.tabPage19.Size = new System.Drawing.Size(378, 461);
             this.tabPage19.TabIndex = 1;
             this.tabPage19.Text = "tabPage19";
             this.tabPage19.UseVisualStyleBackColor = true;
@@ -1284,17 +1297,16 @@ namespace LinAlg
             this.textBoxerrinfo.Location = new System.Drawing.Point(103, 3);
             this.textBoxerrinfo.Multiline = true;
             this.textBoxerrinfo.Name = "textBoxerrinfo";
-            this.textBoxerrinfo.Size = new System.Drawing.Size(1088, 41);
+            this.textBoxerrinfo.Size = new System.Drawing.Size(678, 41);
             this.textBoxerrinfo.TabIndex = 3;
             // 
             // LatexViewBox
             // 
             this.LatexViewBox.BackColor = System.Drawing.Color.White;
-            this.LatexViewBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.LatexViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LatexViewBox.Location = new System.Drawing.Point(507, 5);
+            this.LatexViewBox.Location = new System.Drawing.Point(407, 5);
             this.LatexViewBox.Name = "LatexViewBox";
-            this.LatexViewBox.Size = new System.Drawing.Size(1194, 513);
+            this.LatexViewBox.Size = new System.Drawing.Size(784, 513);
             this.LatexViewBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LatexViewBox.TabIndex = 0;
             this.LatexViewBox.TabStop = false;
@@ -1305,8 +1317,8 @@ namespace LinAlg
             this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 500F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 1200F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
             this.tableLayoutPanel1.Controls.Add(this.LatexViewBox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
@@ -1316,7 +1328,7 @@ namespace LinAlg
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.75343F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.246573F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.246572F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1196, 578);
             this.tableLayoutPanel1.TabIndex = 8;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
@@ -1329,11 +1341,11 @@ namespace LinAlg
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBoxerrinfo, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(507, 526);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(407, 526);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1194, 47);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(784, 47);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // Form1
@@ -1482,7 +1494,7 @@ namespace LinAlg
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.TabPage tabPage15;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox textBoxRTFMission;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.TextBox textBoxth1;
         private System.Windows.Forms.Button button10;
@@ -1517,6 +1529,7 @@ namespace LinAlg
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
         private System.Windows.Forms.ComboBox comboBoxRDB;
         private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Button button17;
     }
 }
 

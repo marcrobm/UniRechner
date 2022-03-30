@@ -37,6 +37,9 @@ namespace LinAlg
     }
     class Utils
     {
+        public static string NL = "\\\\ \\\\";// New Line Latex
+        public static string TAB = Ltx("     ");// New Line Latex
+                                              // public static string NL = "\\newline";
         public static string StringArrToLatexMatrix(string[][] mat,string null_value = "null",bool borders = true)
         {
             String s = @"\pmatrix{";
@@ -212,6 +215,10 @@ namespace LinAlg
                 searchpos--;
             }
             return -1;
+        }
+        public static string str(double n)
+        {
+            return(String.Format("{0:0.###}",n));
         }
     }
 }

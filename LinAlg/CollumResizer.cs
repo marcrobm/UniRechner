@@ -36,10 +36,10 @@ namespace UniRechner
             {
                 lastMoved = false;
             }
-            Console.WriteLine("movableindex:" + movableIndex);
+           // Console.WriteLine("movableindex:" + movableIndex);
             if (movableIndex != -1)
             {
-                panel.FindForm().Cursor = Cursors.VSplit;
+               // panel.FindForm().Cursor = Cursors.VSplit;
                 if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
                     // move this beam
