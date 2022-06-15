@@ -13,6 +13,7 @@ namespace LinAlg
     // A class which manages access to this software
     class DRM
     {
+        static DateTime ExpirationDate = new DateTime(2022, 8, 15);
         static string salt = "s2398rhfionwchwgisdvn&87530";
         public static bool EnsureActivation()
         {
@@ -25,7 +26,6 @@ namespace LinAlg
                     return false;
                 }
                 SaveLicenseKey(x.key);
-               // Console.WriteLine(generateLicenseKey());
             }
             return true;
         }
@@ -36,7 +36,6 @@ namespace LinAlg
             const string keyName = userRoot + "\\" + subkey;
             Registry.SetValue(keyName, "License",license);
         }
-
         public static String generateLicenseKey()
         {
             return (GetHash(GetCpuID() + salt));
@@ -50,15 +49,7 @@ namespace LinAlg
         }
         public static bool ActivateSoftware(string LicenseKey)
         {
-            if (VerifyHash(GetCpuID()+salt, LicenseKey))
-            {
-                return true;
-            }
-            return false;
-        }
-        static bool IsActivated()
-        {
-            return false;
+            return VerifyHash(GetCpuID() + salt, LicenseKey) || DateTime.Today < ExpirationDate;
         }
         private static string GetCpuID()
         {
